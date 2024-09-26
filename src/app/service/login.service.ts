@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class LoginService {
 
-  apiUrl : string = 'http://localhost:5058/api/';
+  apiUrl : string = 'http://localhost:5058/api/Login/';
   constructor(private http: HttpClient) { }
 
   Login(data : any) {
@@ -23,4 +23,7 @@ export class LoginService {
     localStorage.setItem("Token", user.token);
   }
 
+  Signup (data: any){
+    return this.http.post(this.apiUrl + 'Signup' , data);
+  }
 }

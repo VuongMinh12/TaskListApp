@@ -1,43 +1,131 @@
-.login{
-  color: #fff;
+.fr {
+  display: block;
+  float: right;
 }
-.login a{
-  color: #d39e00;
-  font-weight: 600;
-  text-decoration: none;
-}
-body{
 
-  background-color: brown;
+.outer {
+  height: 100vh;
+  background: linear-gradient(to top, #c9c9ff 50%, #6e6ef6 90%) no-repeat;
 }
-.auth-card{
-  background: #c31432;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #240b36, #c31432);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #240b36, #c31432); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  border-radius: 5px;
-  box-shadow: 0px 0px 30px #f7f7f7;
-}
-label{
-  color: #fff;
-  font-weight: 700;
-}
-.user-image{
-  height: 70px;
-}
-.auth-avatar{
+
+.panel-heading {
   text-align: center;
-  margin-top: -50px;
+  margin-bottom: 10px
 }
-.auth{
-  margin-top: 35px;
+
+#forgot {
+  min-width: 100px;
+  margin-left: auto;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a:hover {
+  text-decoration: none
+}
+
+.form-inline label {
+  padding-left: 10px;
+  margin: 0;
+  cursor: pointer
+}
+
+.btn {
+  margin-top: 10px;
+  border-radius: 15px
+}
+
+.panel {
+  min-height: 380px;
+  box-shadow: 20px 20px 80px rgb(218, 218, 218);
+  border-radius: 12px;
+  margin-top: 100px
+}
+
+.input-field {
+  border-radius: 5px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  color: #4343ff
+}
+
+.input-field.error {
+  border: 1px solid red;
+  color: red;
+}
+
+input[type='text'],
+input[type='password'] {
+
   border: none;
-  border-radius: 6px;
+  outline: none;
+  box-shadow: none;
+  width: 100%
 }
-.btn-my{
-  background-color: #d39e00;
-  border-color: #d39e00;
-  color: #fff;
+
+
+img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+  position: relative
 }
-.simple-keyboard {
-  max-width: 850px;
+
+
+/* a[target='_blank'] {
+position: relative;
+transition: all 0.1s ease-in-out
+} */
+
+.bordert {
+  border-top: 1px solid #aaa;
+  position: relative
+}
+
+.bordert:after {
+  content: "or connect with";
+  position: absolute;
+  top: -13px;
+  left: 33%;
+  background-color: #fff;
+  padding: 0px 8px
+}
+
+@media(max-width: 360px) {
+  #forgot {
+      margin-left: 0;
+      padding-top: 10px
+  }
+  body {
+      height: 100%
+  }
+  .container {
+      margin: 30px 0
+  }
+  .bordert:after {
+      left: 25%
+  }
+}
+
+
+/* Added Css for eye icon button */
+
+.bg-white {
+  background: none;
+  border: none;
+}
+
+
+/* added height css for ngtoast */
+
+.toast-right-top {
+  height: auto !important;
+}
+
+.sign-up input, .sign-up input:focus{
+  border: none !important;
 }
