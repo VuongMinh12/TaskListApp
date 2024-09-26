@@ -21,7 +21,7 @@
 
                             <div class="form-group pt-2">
                                 <div class="input-field"> <span class="fa fa-lock px-2"></span>
-                                <input [type]="hide() ? 'password' : 'text'" placeholder="Password"  [(ngModel)] = "inputPw" required>
+                                <input [type]="hide() ? 'password' : 'text'" placeholder="Password"  [(ngModel)] = "inputPw" required (keyup.enter)="login()" >
                                 <button
                                 mat-icon-button
                                 matSuffix

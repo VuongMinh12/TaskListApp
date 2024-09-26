@@ -24,49 +24,43 @@ export class ServiceInvoker {
     return this.http.get(this.apiUrl+url, httpPackage);
   }
 
-  // post(request: any, url:string ) : Observable<any>
-  // {
-  //   if(request == undefined || request == "") request = {};
+  post(request: any, url:string ) : Observable<any>
+  {
+    if(request == undefined || request == "") request = {};
 
-  //   request.currUserId = localStorage.getItem("UserId");
-  //   request.UserRole = localStorage.getItem("RoleId");
-  //   request.Token = localStorage.getItem("Token");
+    request.currUserId = localStorage.getItem("UserId");
+    request.Token = localStorage.getItem("Token");
 
-  //   const httpPackage = {
-  //     params: request
-  //   }
+    const httpPackage = request
 
-  //   return this.http.post(url, httpPackage);
-  // }
+    return this.http.post(this.apiUrl + url, httpPackage);
+  }
 
-  // put(request: any, url:string ) : Observable<any>
-  // {
-  //   if(request == undefined || request == "") request = {};
+  put(request: any, url:string ) : Observable<any>
+  {
+    if(request == undefined || request == "") request = {};
 
-  //   request.currUserId = localStorage.getItem("UserId");
-  //   request.UserRole = localStorage.getItem("RoleId");
-  //   request.Token = localStorage.getItem("Token");
+    request.currUserId = localStorage.getItem("UserId");
+    request.Token = localStorage.getItem("Token");
 
-  //   const httpPackage = {
-  //     params: request
-  //   }
+    const httpPackage = request
 
-  //   return this.http.put(url, httpPackage);
-  // }
+    return this.http.put(this.apiUrl+url, httpPackage);
+  }
 
-  // delete(request: any, url:string ) : Observable<any>
-  // {
-  //   if(request == undefined || request == "") request = {};
+  delete(request: any, url:string ) : Observable<any>
+  {
+    if(request == undefined || request == "") request = {};
 
-  //   request.currUserId = localStorage.getItem("UserId");
-  //   request.UserRole = localStorage.getItem("RoleId");
-  //   request.Token = localStorage.getItem("Token");
+    request.currUserId = localStorage.getItem("UserId");
+    request.UserRole = localStorage.getItem("RoleId");
+    request.Token = localStorage.getItem("Token");
 
-  //   const httpPackage = {
-  //     params: request
-  //   }
+    const httpPackage = {
+      params: request
+    }
 
-  //   return this.http.delete(url, httpPackage);
-  // }
+    return this.http.delete(this.apiUrl + url, httpPackage);
+  }
 
 }

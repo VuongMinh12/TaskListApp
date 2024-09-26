@@ -1,9 +1,9 @@
 <div class="martab">
   <mat-toolbar color="primary">
     <span>Task Management </span>
-    <button type="button" class="btn btn-success  btn-lg" style="margin-right:0px; margin-left: auto;">Add a new Task</button>
+    <button type="button" class="btn btn-success " (click)="OpenEditAddTask({}, 2)" style="margin-right:0px; margin-left: auto;">Add a new Task</button>
   </mat-toolbar>
-    <div class="mat-elevation-z8">
+  <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource">
 
       <!-- Position Column -->
@@ -32,7 +32,7 @@
 
       <ng-container matColumnDef="FinishDate">
         <th mat-header-cell *matHeaderCellDef> FinishDate </th>
-        <td mat-cell *matCellDef="let element"> {{getFormatedDate(element.finishDate, "dd/MM/yyyy")}}  </td>
+        <td mat-cell *matCellDef="let element"> {{getFormatedDate(element.finishDate, "dd/MM/yyyy")}} </td>
       </ng-container>
 
       <ng-container matColumnDef="Estimate">
@@ -42,9 +42,9 @@
 
       <ng-container matColumnDef="Edit">
         <th mat-header-cell *matHeaderCellDef> Edit </th>
-        <td mat-cell *matCellDef="let row">
+        <td mat-cell *matCellDef="let element">
           <span class="action-icon" style="margin-right: 5px;">
-            <mat-icon color="primary" (click)="OpenEditTask(element)">edit</mat-icon>
+            <mat-icon color="primary" (click)="OpenEditAddTask(element, 1)">edit</mat-icon>
           </span>
 
         </td>
@@ -53,8 +53,8 @@
 
       <ng-container matColumnDef="Delete">
         <th mat-header-cell *matHeaderCellDef> Delete </th>
-        <td mat-cell *matCellDef="let row">
-          <span class="action-icon">
+        <td mat-cell *matCellDef="let element ">
+          <span class="action-icon" (click)="DeleteTask(element.taskId)">
             <mat-icon color="warn">delete</mat-icon>
           </span>
         </td>
@@ -71,44 +71,50 @@
 </div>
 
 
+
 <div class="modal" id="ModalEdit">
   <div class="modal-dialog modal-dialog-centered  ">
     <div class="modal-content">
       <!-- Modal Header -->
       <div class="modal-header">
         <h4 class="modal-title">Edit Task</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="CloveEditAddTask()"></button>
       </div>
       <!-- Modal body -->
       <div class="modal-body">
+        <label>Title </label>
+        <input type="text" [(ngModel)]="updateModel.Title" required>
 
-        <form >
-          <label>Title </label>
-          <input type="text">
-          <label> Status</label>
-          <input>
-          <label> Create Date</label>
-          <p-calendar [(ngModel)]="model.CreateDate"
-          dateFormat="dd/mm/yy" [showIcon]="true" [appendTo]="'body'" [iconDisplay]="'input'"></p-calendar>
-          <label> Finish Date</label>
-          <input type="date">
-          <label> Estimate</label>
-          <input type="number">
-        </form>
+        <br /><br />
+        <label> Status</label>
+
+        <select [(ngModel)]="updateModel.StatusId" class="form-control" required>
+          <option *ngFor="let status of statusList" [value]="status.statusId">
+            {{status.statusName}}
+          </option>
+        </select>
+
+        <br /><br />
+        <label> Create Date</label>
+        <p-calendar [(ngModel)]="updateModel.CreateDate" dateFormat="dd/mm/yy" [showIcon]="true" [appendTo]=" 'ModalEdit' "
+          [iconDisplay]="'input'" required>
+        </p-calendar>
+
+        <br /><br />
+        <label> Finish Date</label>
+
+
+        <br/><br/>
+        <label> Estimate</label>
+        <input type="number" min="0" [(ngModel)]="updateModel.Estimate" required>
 
       </div>
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button class="btn btn-success">Edit</button>
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="CloveEditTask()">Close</button>
+        <button class="btn btn-success" (click)="OnSave()">Save</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="CloveEditAddTask()">Close</button>
       </div>
 
     </div>
   </div>
 </div>
-
-
-
-
-
-
-

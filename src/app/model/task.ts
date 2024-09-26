@@ -25,12 +25,12 @@ export class TaskUpdateCreate {
   FinishDate : Date;
   Estimate : number;
 
-  constructor(){
-    this.TaskId = 0;
-    this.Title = "" ;
-    this.StatusId = 0;
-    this.CreateDate = new Date();
-    this.FinishDate = new Date();
-    this.Estimate = 0;
+  constructor(temp: any){
+    this.TaskId = temp.taskId;
+    this.Title = temp.title ;
+    this.StatusId = temp.statusId;
+    this.CreateDate = temp.createDate;
+    this.FinishDate = temp.finishDate;
+    this.Estimate = temp.estimate;
   }
 }

@@ -24,8 +24,6 @@ import {MatInputModule} from '@angular/material/input';
   styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnInit {
-  isText: boolean = false;
-  eyeIcon: string = 'fa-eye-slash';
 
   inputUName: string = "";
   inputPw: string = ""
@@ -48,10 +46,8 @@ export class LoginComponent implements OnInit {
 
     this.service.Login(request).subscribe((response: any) => {
       if(response.status == 1) {
-        console.log(response);
         this.service.setUserInfoLocalStorage(response);
-        alert("Xin chao " + response.userName)
-        this.router.navigate(["/taskboard",]);
+        this.router.navigate(["/taskboard"]);
       }
       else
         {
