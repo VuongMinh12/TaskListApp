@@ -2,12 +2,11 @@ import { OnInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { RouterOutlet } from '@angular/router';
-import { TaskResponse, TaskUpdateCreate } from '../../model/task';
+import { Task, TaskUpdateCreate } from '../../model/task';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TaskService } from '../../service/task.service';
 import { DatePipe, NgFor } from '@angular/common';
-import { CalendarModule } from 'primeng/calendar';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -23,7 +22,6 @@ import { RouterModule, Router } from '@angular/router';
     RouterOutlet,
     MatIconModule,
     MatToolbarModule,
-    CalendarModule,
     FormsModule,
     MatFormFieldModule,
     MatSelectModule,
@@ -44,7 +42,7 @@ export class TaskComponent implements OnInit {
     'Edit',
     'Delete',
   ];
-  dataSource: MatTableDataSource<TaskResponse> = new MatTableDataSource();
+  dataSource: MatTableDataSource<Task> = new MatTableDataSource();
 
   PageNumber = 1;
   PageSize = 50;
@@ -179,6 +177,7 @@ export class TaskComponent implements OnInit {
       modalAdd.style.display = 'block';
     }
   }
+
   CloveEditAddTask() {
     const modalAdd = document.getElementById('ModalEdit');
     if (modalAdd != null) {

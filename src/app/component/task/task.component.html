@@ -62,7 +62,8 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
-    <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons aria-label="Select page of periodic elements">
+    <mat-paginator [pageSizeOptions]="[10, 20, 50]"
+      showFirstLastButtons aria-label="Select page of periodic elements">
     </mat-paginator>
   </div>
 </div>
@@ -75,43 +76,50 @@
       <!-- Modal Header -->
       <div class="modal-header">
         <h4 class="modal-title">Edit Task</h4>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="CloveEditAddTask()"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"
+          (click)="CloveEditAddTask()"></button>
       </div>
       <!-- Modal body -->
       <div class="modal-body">
-        <label>Title </label>
-        <input type="text" [(ngModel)]="updateModel.Title" required>
+        <div  class="form-group">
+          <label>Title </label>
+          <input class="form-control" type="text" [(ngModel)]="updateModel.Title" required>
+        </div>
 
-        <br /><br />
-        <label> Status</label>
+        <div class="form-group">
+          <label> Status</label>
+          <select class="form-control" [(ngModel)]="updateModel.StatusId" required>
+            <option *ngFor="let status of statusList" [value]="status.statusId">
+              {{status.statusName}}
+            </option>
+          </select>
+        </div>
 
-        <select [(ngModel)]="updateModel.StatusId" class="form-control" required>
-          <option *ngFor="let status of statusList" [value]="status.statusId">
-            {{status.statusName}}
-          </option>
-        </select>
+        <div class="form-group">
+          <label> Create Date</label>
+          <input type="date" class="form-control" [(ngModel)]="updateModel.CreateDate" placeholder="Create Date"
+          dateFormat="dd/MM/yyyy" required >
+        </div>
 
-        <br /><br />
-        <label> Create Date</label>
-        <p-calendar [(ngModel)]="updateModel.CreateDate" dateFormat="dd/mm/yy" [showIcon]="true"
-          [appendTo]=" 'ModalEdit' " [iconDisplay]="'input'" required>
-        </p-calendar>
+        <div class="form-group">
+          <label> Finish Date</label>
+          <input type="date" class="form-control" [(ngModel)]="updateModel.FinishDate" placeholder="Finish Date"
+          dateFormat="dd/MM/yyyy" required>
+          <!-- <p-calendar class="form-control" [(ngModel)]="updateModel.FinishDate"
+          dateFormat="dd/mm/yy" [showIcon]="true"  [appendTo]="'body'"
+            [appendTo]=" 'ModalEdit' " [iconDisplay]="'input'" required></p-calendar> -->
+        </div>
 
-        <br /><br />
-        <label> Finish Date</label>
-        <p-calendar [(ngModel)]="updateModel.FinishDate" dateFormat="dd/mm/yy" [showIcon]="true"
-          [appendTo]=" 'ModalEdit' " [iconDisplay]="'input'" required>
-        </p-calendar>
-
-        <br /><br />
-        <label> Estimate</label>
-        <input type="number" [(ngModel)]="updateModel.Estimate" required>
-
+        <div class="form-group">
+          <label> Estimate</label>
+          <input class="form-control" type="number" [(ngModel)]="updateModel.Estimate" required>
+        </div>
       </div>
       <!-- Modal footer -->
       <div class="modal-footer">
         <button class="btn btn-success" (click)="OnSave()">Save</button>
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="CloveEditAddTask()">Close</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+          (click)="CloveEditAddTask()">Close</button>
       </div>
 
     </div>

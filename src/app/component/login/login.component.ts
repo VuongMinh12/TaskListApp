@@ -45,8 +45,8 @@ export class LoginComponent implements OnInit {
           this.service.setUserInfoLocalStorage(response);
           this.router.navigate(['/taskboard']);
         } else {
-          alert('Tai khoan sai! Xin moi nhap lai tai khoan');
-          this.inputUName == ' ', this.inputPw == ' ';
+          alert(response.message);
+          this.inputUName == "", this.inputPw == "";
         }
       });
     }

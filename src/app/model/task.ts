@@ -1,4 +1,4 @@
-export interface TaskResponse {
+export interface Task {
   No :number ;
   Title : string;
   StatusName : string;
@@ -8,15 +8,6 @@ export interface TaskResponse {
   UserName : string;
 }
 
-export interface TaskRequest {
-  PageNumber : number,
-  PageSize : number,
-  Title : string ,
-  StatusId : number,
-  CreateDate : string,
-  FinishDate : string,
-  UserId : number
-}
 export class TaskUpdateCreate {
   TaskId : number;
   Title : string;

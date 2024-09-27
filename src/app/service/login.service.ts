@@ -26,4 +26,7 @@ export class LoginService {
   Signup (data: any){
     return this.http.post(this.apiUrl + 'Signup' , data);
   }
+  Forgotpass (data : any){
+    return this.http.post(this.apiUrl + 'ForgotPassword' , data );
+  }
 }

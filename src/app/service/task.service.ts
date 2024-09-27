@@ -1,9 +1,8 @@
 
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ServiceInvoker } from './serviceInvocer';
-import { StatusRequest } from '../model/status';
-import { TaskUpdateCreate } from '../model/task';
+
 
 @Injectable({
   providedIn: 'root'
