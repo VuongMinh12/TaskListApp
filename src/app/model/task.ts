@@ -8,7 +8,7 @@ export interface Task {
   UserName : string;
 }
 
-export class TaskUpdateCreate {
+export class TaskUpdateAddCreate {
   TaskId : number;
   Title : string;
   StatusId : number;

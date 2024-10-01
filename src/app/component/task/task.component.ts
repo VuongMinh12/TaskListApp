@@ -2,7 +2,7 @@ import { OnInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { RouterOutlet } from '@angular/router';
-import { Task, TaskUpdateCreate } from '../../model/task';
+import { Task, TaskUpdateAddCreate } from '../../model/task';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TaskService } from '../../service/task.service';
@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { RouterModule, Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-task',
@@ -27,6 +28,7 @@ import { RouterModule, Router } from '@angular/router';
     MatSelectModule,
     NgFor,
     RouterModule,
+
   ],
   templateUrl: './task.component.html',
   styleUrl: './task.component.css',
@@ -51,13 +53,16 @@ export class TaskComponent implements OnInit {
   CreateDateInput: Date | null = null;
   EndDateInput: Date | null = null;
   UserInput: number = 0;
-  tasklist: TaskUpdateCreate[] = [];
+  tasklist: TaskUpdateAddCreate[] = [];
   listTask: any[] = [];
-  updateModel: TaskUpdateCreate = new TaskUpdateCreate({});
+  updateModel: TaskUpdateAddCreate = new TaskUpdateAddCreate({});
   editOrAdd: number = 1;
   statusList: any[] = [];
 
-  constructor(private service: TaskService, private router: Router) {}
+  editCreateDate: string = "";
+  editEndDate: string = "";
+
+  constructor(private service: TaskService, private router: Router, ) {}
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
@@ -73,20 +78,20 @@ export class TaskComponent implements OnInit {
     }
   }
 
+  clearStatus() {
+    this.StatusInput = 0;
+    this.loadAllTask();
+  }
+
   loadAllTask() {
     var request = {
       pageNumber: this.PageNumber,
       pageSize: this.PageSize,
-      title: this.TitleInput,
+      title: this.TitleInput.toLowerCase(),
       statusId: this.StatusInput,
       createDate:
-        this.CreateDateInput == null
-          ? ''
-          : this.getFormatedDate(this.CreateDateInput, 'yyyy/MM/dd'),
-      finishDate:
-        this.EndDateInput == null
-          ? ''
-          : this.getFormatedDate(this.EndDateInput, 'yyyy/MM/dd'),
+        this.CreateDateInput == null? '': this.getFormatedDate(this.CreateDateInput, 'yyyy/MM/dd'),
+      finishDate: this.EndDateInput == null? '': this.getFormatedDate(this.EndDateInput, 'yyyy/MM/dd'),
     };
     this.service.GetListTask(request).subscribe(
       (data) => {
@@ -118,10 +123,11 @@ export class TaskComponent implements OnInit {
   }
 
   OnSave() {
+    this.updateModel.CreateDate = new Date(this.editCreateDate);
+    this.updateModel.FinishDate = new Date(this.editEndDate);
     var request = {
       task: this.updateModel,
     };
-
     if (
       this.updateModel.Title != "" &&
       this.updateModel.StatusId != null &&
@@ -162,17 +168,20 @@ export class TaskComponent implements OnInit {
     }
   }
 
-  getFormatedDate(date: Date, format: string) {
+  getFormatedDate(date: Date| null, format: string) : string {
     const datePipe = new DatePipe('en-US');
-    return datePipe.transform(date, format);
+    let temp = datePipe.transform(date, format);
+    if (temp == null) return ""
+    return temp;
   }
 
   //1 edit, 2 create
   OpenEditAddTask(element: any, type: number) {
     this.editOrAdd = type;
     const modalAdd = document.getElementById('ModalEdit');
-    this.updateModel = new TaskUpdateCreate(element);
-
+    this.updateModel = new TaskUpdateAddCreate(element);
+    this.editCreateDate = this.getFormatedDate(this.updateModel.CreateDate, 'yyyy-MM-dd');
+    this.editEndDate = this.getFormatedDate(this.updateModel.FinishDate, 'yyyy-MM-dd');
     if (modalAdd != null) {
       modalAdd.style.display = 'block';
     }
@@ -203,4 +212,5 @@ export class TaskComponent implements OnInit {
     localStorage.clear();
     this.router.navigate(['/login']);
   }
+
 }

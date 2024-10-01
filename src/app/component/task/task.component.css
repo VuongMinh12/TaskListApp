@@ -20,4 +20,19 @@ table {
   flex: 2;
   margin-left: 1rem;
 }
-
+.form-group-search{
+  width: 18%;
+}
+.clear-btn{
+  font-size: 13px;
+  text-align: right;
+  color: gray;
+  padding: 4px;
+  border-radius: 8px;
+  margin-left:90px;
+}
+.clear-btn:hover{
+  background-color: gray;
+  color: white;
+  transition-duration: 0.5s;
+}

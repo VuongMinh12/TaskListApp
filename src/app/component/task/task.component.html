@@ -6,8 +6,9 @@
     <button type="button" class="btn btn-danger" (click)="Logout()"
       style="margin-right:0px; margin-left: 30px;">Logout</button>
   </mat-toolbar>
+
   <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource">
+    <table mat-table [dataSource]="dataSource" >
 
       <ng-container matColumnDef="No">
         <th mat-header-cell *matHeaderCellDef> No. </th>
@@ -15,22 +16,45 @@
       </ng-container>
 
       <ng-container matColumnDef="Title">
-        <th mat-header-cell *matHeaderCellDef> Title </th>
+        <th mat-header-cell *matHeaderCellDef>
+          <div>Title</div>
+          <input type="text" class="form-control" [(ngModel)] = "TitleInput" (keyup)="loadAllTask()" style="width: 80%;">
+        </th>
         <td mat-cell *matCellDef="let element"> {{element.title}} </td>
       </ng-container>
 
       <ng-container matColumnDef="Status">
-        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <th mat-header-cell *matHeaderCellDef>
+          <div>
+            Status
+            <b class="clear-btn" (click)="clearStatus()">X</b>
+            </div>
+          <select class="form-control" [(ngModel)]="StatusInput" required (click)="loadAllTask()" style="width: 80%;">
+            <option *ngFor="let status of statusList" [value]="status.statusId">
+              {{status.statusName}}
+            </option>
+
+          </select>
+
+
+
+        </th>
         <td mat-cell *matCellDef="let element"> {{element.statusName}} </td>
       </ng-container>
 
       <ng-container matColumnDef="CreateDate">
-        <th mat-header-cell *matHeaderCellDef> CreateDate </th>
+        <th mat-header-cell *matHeaderCellDef>
+          <div>CreateDate</div>
+          <input type="date" class="form-control" [(ngModel)]="CreateDateInput" (change)="loadAllTask()">
+        </th>
         <td mat-cell *matCellDef="let element"> {{getFormatedDate(element.createDate, "dd/MM/yyyy")}} </td>
       </ng-container>
 
       <ng-container matColumnDef="FinishDate">
-        <th mat-header-cell *matHeaderCellDef> FinishDate </th>
+        <th mat-header-cell *matHeaderCellDef>
+          <div>FinishDate</div>
+          <input type="date" class="form-control" [(ngModel)]="EndDateInput" (change)="loadAllTask()">
+        </th>
         <td mat-cell *matCellDef="let element"> {{getFormatedDate(element.finishDate, "dd/MM/yyyy")}} </td>
       </ng-container>
 
@@ -62,8 +86,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
-    <mat-paginator [pageSizeOptions]="[10, 20, 50]"
-      showFirstLastButtons aria-label="Select page of periodic elements">
+    <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons aria-label="Select page of periodic elements">
     </mat-paginator>
   </div>
 </div>
@@ -75,13 +98,12 @@
     <div class="modal-content">
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Edit Task</h4>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"
-          (click)="CloveEditAddTask()"></button>
+        <h4 class="modal-title">Task</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="CloveEditAddTask()"></button>
       </div>
       <!-- Modal body -->
       <div class="modal-body">
-        <div  class="form-group">
+        <div class="form-group">
           <label>Title </label>
           <input class="form-control" type="text" [(ngModel)]="updateModel.Title" required>
         </div>
@@ -97,17 +119,12 @@
 
         <div class="form-group">
           <label> Create Date</label>
-          <input type="date" class="form-control" [(ngModel)]="updateModel.CreateDate" placeholder="Create Date"
-          dateFormat="dd/MM/yyyy" required >
+          <input type="date" class="form-control" [(ngModel)]="editCreateDate" required>
         </div>
 
         <div class="form-group">
           <label> Finish Date</label>
-          <input type="date" class="form-control" [(ngModel)]="updateModel.FinishDate" placeholder="Finish Date"
-          dateFormat="dd/MM/yyyy" required>
-          <!-- <p-calendar class="form-control" [(ngModel)]="updateModel.FinishDate"
-          dateFormat="dd/mm/yy" [showIcon]="true"  [appendTo]="'body'"
-            [appendTo]=" 'ModalEdit' " [iconDisplay]="'input'" required></p-calendar> -->
+          <input type="date" class="form-control" [(ngModel)]="editEndDate" required>
         </div>
 
         <div class="form-group">
@@ -118,8 +135,7 @@
       <!-- Modal footer -->
       <div class="modal-footer">
         <button class="btn btn-success" (click)="OnSave()">Save</button>
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
-          (click)="CloveEditAddTask()">Close</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="CloveEditAddTask()">Close</button>
       </div>
 
     </div>
