@@ -7,12 +7,11 @@ import { Observable } from 'rxjs';
 })
 export class LoginService {
 
-  apiUrl : string = 'http://localhost:5058/api/Login/';
+  apiUrl : string = 'http://localhost:8009/api/User/';
   constructor(private http: HttpClient) { }
 
   Login(data : any) {
     return this.http.post(this.apiUrl + 'Login',data );
-
   }
 
   setUserInfoLocalStorage(user: any){
@@ -26,6 +25,7 @@ export class LoginService {
   Signup (data: any){
     return this.http.post(this.apiUrl + 'Signup' , data);
   }
+
   Forgotpass (data : any){
     return this.http.post(this.apiUrl + 'ForgotPassword' , data );
   }

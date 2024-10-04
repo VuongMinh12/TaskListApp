@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -7,13 +7,14 @@ import { Observable } from 'rxjs';
 })
 export class ServiceInvoker {
 
-  apiUrl : string = 'http://localhost:5058/api/';
+  apiUrl : string = 'http://localhost:8009/api/';
   constructor(private http: HttpClient) { }
 
   get(request: any, url: string): Observable<any>{
     if(request == undefined || request == "") request = {};
 
     request.currUserId = localStorage.getItem("UserId");
+    request.currUserName = localStorage.getItem("Username");
     request.UserRole = localStorage.getItem("RoleId");
     request.Token = localStorage.getItem("Token");
 
@@ -29,6 +30,7 @@ export class ServiceInvoker {
     if(request == undefined || request == "") request = {};
 
     request.currUserId = localStorage.getItem("UserId");
+    request.currUserName = localStorage.getItem("Username");
     request.Token = localStorage.getItem("Token");
 
     const httpPackage = request
@@ -41,6 +43,7 @@ export class ServiceInvoker {
     if(request == undefined || request == "") request = {};
 
     request.currUserId = localStorage.getItem("UserId");
+    request.currUserName = localStorage.getItem("Username");
     request.Token = localStorage.getItem("Token");
 
     const httpPackage = request
@@ -53,12 +56,14 @@ export class ServiceInvoker {
     if(request == undefined || request == "") request = {};
 
     request.currUserId = localStorage.getItem("UserId");
+    request.currUserName = localStorage.getItem("Username");
     request.UserRole = localStorage.getItem("RoleId");
     request.Token = localStorage.getItem("Token");
 
     const httpPackage = {
-      params: request
-    }
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      body: request
+    };
 
     return this.http.delete(this.apiUrl + url, httpPackage);
   }

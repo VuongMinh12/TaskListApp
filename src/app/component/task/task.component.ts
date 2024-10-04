@@ -49,7 +49,7 @@ export class TaskComponent implements OnInit {
   PageNumber = 1;
   PageSize = 50;
   TitleInput: string = '';
-  StatusInput: number = 0;
+  StatusInput: number = 2;
   CreateDateInput: Date | null = null;
   EndDateInput: Date | null = null;
   UserInput: number = 0;
@@ -200,8 +200,10 @@ export class TaskComponent implements OnInit {
         id: id,
       };
       this.service.DeleteTask(request).subscribe((reponse) => {
+        console.log(id);
         if (reponse.status == 1) {
           this.loadAllTask();
+          reponse.message
         }
         alert(reponse.message);
       });
