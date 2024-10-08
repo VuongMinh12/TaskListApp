@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     if (this.inputUName == '' || this.inputPw == '')
-      alert('Nhap day du thong tin');
+      alert('Vui lòng nhập đầy đủ thông tin');
     else if (this.inputUName != '' || this.inputPw != '') {
       let request = {
         username: this.inputUName,

@@ -72,7 +72,6 @@ export class SignupComponent implements OnInit {
     if (!emailPattern.test(this.inputEmail)) {
       alert('Email không hợp lệ! Hay nhap lai thong tin');
       this.inputEmail = "";
-      // Có thể hiển thị thông báo lỗi cho người dùng ở đây
     }
   }
 }

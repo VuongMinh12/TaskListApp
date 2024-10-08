@@ -67,15 +67,8 @@ export class TaskComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
   ngOnInit() {
-    var token = localStorage.getItem('Token');
-
-    if (token == null) {
-      this.router.navigate(['/login']);
-      alert('Xin moi nhap tai khoan!');
-    } else {
-      this.loadAllTask();
-      this.loadStatus();
-    }
+    this.loadStatus();
+    this.loadAllTask();
   }
 
   clearStatus() {
@@ -135,13 +128,14 @@ export class TaskComponent implements OnInit {
       this.updateModel.FinishDate != null &&
       this.updateModel.Estimate != null
     ) {
+
       if (this.updateModel.CreateDate > this.updateModel.FinishDate) {
-        alert('CreateDate khong duoc lon hon FinishDate');
+        alert('CreateDate không được lớn hơn FinishDate');
         this.updateModel.CreateDate.getDay();
         this.updateModel.CreateDate.getDay();
       } else {
         if (this.updateModel.Estimate <= 0) {
-          alert('Estimate phai lon hon 0');
+          alert('Estimate phải lớn hơn 0');
 
         } else {
           if (this.editOrAdd == 1) {
@@ -195,7 +189,7 @@ export class TaskComponent implements OnInit {
   }
 
   DeleteTask(id: any) {
-    if (confirm('Ban co chac chan muon xoa?')) {
+    if (confirm('Bạn có chắc chắn muốn xóa task này?')) {
       var request = {
         id: id,
       };

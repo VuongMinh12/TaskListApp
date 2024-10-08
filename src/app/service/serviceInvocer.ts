@@ -10,62 +10,69 @@ export class ServiceInvoker {
   apiUrl : string = 'http://localhost:8009/api/';
   constructor(private http: HttpClient) { }
 
-  get(request: any, url: string): Observable<any>{
-    if(request == undefined || request == "") request = {};
+  private getAuthHeaders(): HttpHeaders {
+    const accessToken = localStorage.getItem("AccessToken");
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      ...(accessToken ? { 'Authorization': `Bearer ${accessToken}` } : {})
+    });
+  }
+
+  get(request: any, url: string): Observable<any> {
+    if (request == undefined || request == "") request = {};
 
     request.currUserId = localStorage.getItem("UserId");
     request.currUserName = localStorage.getItem("Username");
     request.UserRole = localStorage.getItem("RoleId");
-    request.Token = localStorage.getItem("Token");
 
     const httpPackage = {
-      params: request
-    }
+      params: request,
+      headers: this.getAuthHeaders()
+    };
 
-    return this.http.get(this.apiUrl+url, httpPackage);
+    return this.http.get(this.apiUrl + url, httpPackage);
   }
 
-  post(request: any, url:string ) : Observable<any>
-  {
-    if(request == undefined || request == "") request = {};
+  post(request: any, url: string): Observable<any> {
+    if (request == undefined || request == "") request = {};
 
     request.currUserId = localStorage.getItem("UserId");
     request.currUserName = localStorage.getItem("Username");
-    request.Token = localStorage.getItem("Token");
 
-    const httpPackage = request
+    const httpPackage = {
+      headers: this.getAuthHeaders(),
+      body: request
+    };
 
     return this.http.post(this.apiUrl + url, httpPackage);
   }
 
-  put(request: any, url:string ) : Observable<any>
-  {
-    if(request == undefined || request == "") request = {};
+  put(request: any, url: string): Observable<any> {
+    if (request == undefined || request == "") request = {};
 
     request.currUserId = localStorage.getItem("UserId");
     request.currUserName = localStorage.getItem("Username");
-    request.Token = localStorage.getItem("Token");
 
-    const httpPackage = request
+    const httpPackage = {
+      headers: this.getAuthHeaders(),
+      body: request
+    };
 
-    return this.http.put(this.apiUrl+url, httpPackage);
+    return this.http.put(this.apiUrl + url, httpPackage);
   }
 
-  delete(request: any, url:string ) : Observable<any>
-  {
-    if(request == undefined || request == "") request = {};
+  delete(request: any, url: string): Observable<any> {
+    if (request == undefined || request == "") request = {};
 
     request.currUserId = localStorage.getItem("UserId");
     request.currUserName = localStorage.getItem("Username");
     request.UserRole = localStorage.getItem("RoleId");
-    request.Token = localStorage.getItem("Token");
 
     const httpPackage = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      headers: this.getAuthHeaders(),
       body: request
     };
 
     return this.http.delete(this.apiUrl + url, httpPackage);
   }
-
 }
