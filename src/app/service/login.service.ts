@@ -43,7 +43,7 @@ export class LoginService {
             localStorage.setItem("AccessToken", response.newAccessToken);
             return of(response.newAccessToken); // Return the new access token
           }else{
-            console.error("Refresh token failed hihi");
+            console.error("Refresh token failed");
             return of(null); // Handle refresh failure
           }
 
