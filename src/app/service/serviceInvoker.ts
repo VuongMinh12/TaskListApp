@@ -13,7 +13,7 @@ export class ServiceInvoker {
   private getAuthHeaders(): HttpHeaders {
     const accessToken = localStorage.getItem("AccessToken");
     return new HttpHeaders({
-      'Content-Type': 'application/json; charset=utf-8',
+      'Content-Type': 'application/json',
       ...(accessToken ? { 'Authorization': `Bearer ${accessToken}` } : {})
     });
   }
