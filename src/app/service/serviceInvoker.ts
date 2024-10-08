@@ -13,7 +13,7 @@ export class ServiceInvoker {
   private getAuthHeaders(): HttpHeaders {
     const accessToken = localStorage.getItem("AccessToken");
     return new HttpHeaders({
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json; charset=utf-8',
       ...(accessToken ? { 'Authorization': `Bearer ${accessToken}` } : {})
     });
   }
@@ -39,12 +39,13 @@ export class ServiceInvoker {
     request.currUserId = localStorage.getItem("UserId");
     request.currUserName = localStorage.getItem("Username");
 
-    const httpPackage = {
-      headers: this.getAuthHeaders(),
-      body: request
+    const httpPackage = request;
+
+    const httpHeaders = {
+      headers: this.getAuthHeaders()
     };
 
-    return this.http.post(this.apiUrl + url, httpPackage);
+    return this.http.post(this.apiUrl + url, httpPackage, httpHeaders);
   }
 
   put(request: any, url: string): Observable<any> {
@@ -53,12 +54,12 @@ export class ServiceInvoker {
     request.currUserId = localStorage.getItem("UserId");
     request.currUserName = localStorage.getItem("Username");
 
-    const httpPackage = {
-      headers: this.getAuthHeaders(),
-      body: request
-    };
+    const httpPackage = request;
 
-    return this.http.put(this.apiUrl + url, httpPackage);
+    const httpHeaders = {
+      headers: this.getAuthHeaders()
+    };
+    return this.http.put(this.apiUrl + url, httpPackage, httpHeaders);
   }
 
   delete(request: any, url: string): Observable<any> {
