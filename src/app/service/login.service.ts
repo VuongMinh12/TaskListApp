@@ -28,7 +28,7 @@ export class LoginService {
   refreshAccessToken(): Observable<any> {
     const refreshToken = localStorage.getItem("RefreshToken");
     if (!refreshToken) {
-      return of(null); // No refresh token available
+      return of(null);
     }
 
     var request = {
@@ -41,16 +41,16 @@ export class LoginService {
         switchMap(response => {
           if(response.status == 1){
             localStorage.setItem("AccessToken", response.newAccessToken);
-            return of(response.newAccessToken); // Return the new access token
+            return of(response.newAccessToken);
           }else{
             console.error("Refresh token failed");
-            return of(null); // Handle refresh failure
+            return of(null);
           }
 
         }),
         catchError(error => {
           console.error("Refresh token failed", error);
-          return of(null); // Handle refresh failure
+          return of(null);
         })
       );
   }

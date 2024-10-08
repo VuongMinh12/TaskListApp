@@ -20,14 +20,13 @@ export const AuthInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: 
               });
               return next(clonedReq);
             } else {
-              alert("Session het han");
               router.navigate(['/login']);
               return throwError(() => error);
             }
           })
         );
-      } else {
-        // If the error is not 401, re-throw the error
+      } else
+      {
         return throwError(() => error);
       }
     })
