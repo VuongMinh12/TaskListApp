@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -7,66 +7,72 @@ import { Observable } from 'rxjs';
 })
 export class ServiceInvoker {
 
-  apiUrl : string = 'http://localhost:5058/api/';
+  apiUrl : string = 'http://localhost:8009/api/';
   constructor(private http: HttpClient) { }
 
-  get(request: any, url: string): Observable<any>{
-    if(request == undefined || request == "") request = {};
-
-    request.currUserId = localStorage.getItem("UserId");
-    request.UserRole = localStorage.getItem("RoleId");
-    request.Token = localStorage.getItem("Token");
-
-    const httpPackage = {
-      params: request
-    }
-
-    return this.http.get(this.apiUrl+url, httpPackage);
+  private getAuthHeaders(): HttpHeaders {
+    const accessToken = localStorage.getItem("AccessToken");
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      ...(accessToken ? { 'Authorization': `Bearer ${accessToken}` } : {})
+    });
   }
 
-  // post(request: any, url:string ) : Observable<any>
-  // {
-  //   if(request == undefined || request == "") request = {};
+  get(request: any, url: string): Observable<any> {
+    if (request == undefined || request == "") request = {};
 
-  //   request.currUserId = localStorage.getItem("UserId");
-  //   request.UserRole = localStorage.getItem("RoleId");
-  //   request.Token = localStorage.getItem("Token");
+    request.currUserId = localStorage.getItem("UserId");
+    request.currUserName = localStorage.getItem("Username");
+    request.UserRole = localStorage.getItem("RoleId");
 
-  //   const httpPackage = {
-  //     params: request
-  //   }
+    const httpPackage = {
+      params: request,
+      headers: this.getAuthHeaders()
+    };
 
-  //   return this.http.post(url, httpPackage);
-  // }
+    return this.http.get(this.apiUrl + url, httpPackage);
+  }
 
-  // put(request: any, url:string ) : Observable<any>
-  // {
-  //   if(request == undefined || request == "") request = {};
+  post(request: any, url: string): Observable<any> {
+    if (request == undefined || request == "") request = {};
 
-  //   request.currUserId = localStorage.getItem("UserId");
-  //   request.UserRole = localStorage.getItem("RoleId");
-  //   request.Token = localStorage.getItem("Token");
+    request.currUserId = localStorage.getItem("UserId");
+    request.currUserName = localStorage.getItem("Username");
 
-  //   const httpPackage = {
-  //     params: request
-  //   }
+    const httpPackage = {
+      headers: this.getAuthHeaders(),
+      body: request
+    };
 
-  //   return this.http.put(url, httpPackage);
-  // }
+    return this.http.post(this.apiUrl + url, httpPackage);
+  }
 
-  // delete(request: any, url:string ) : Observable<any>
-  // {
-  //   if(request == undefined || request == "") request = {};
+  put(request: any, url: string): Observable<any> {
+    if (request == undefined || request == "") request = {};
 
-  //   request.currUserId = localStorage.getItem("UserId");
-  //   request.UserRole = localStorage.getItem("RoleId");
-  //   request.Token = localStorage.getItem("Token");
+    request.currUserId = localStorage.getItem("UserId");
+    request.currUserName = localStorage.getItem("Username");
 
-  //   const httpPackage = {
-  //     params: request
-  //   }
+    const httpPackage = {
+      headers: this.getAuthHeaders(),
+      body: request
+    };
 
-  //   return this.http.delete(url, httpPackage);
-  // }
+    return this.http.put(this.apiUrl + url, httpPackage);
+  }
 
+  delete(request: any, url: string): Observable<any> {
+    if (request == undefined || request == "") request = {};
+
+    request.currUserId = localStorage.getItem("UserId");
+    request.currUserName = localStorage.getItem("Username");
+    request.UserRole = localStorage.getItem("RoleId");
+
+    const httpPackage = {
+      headers: this.getAuthHeaders(),
+      body: request
+    };
+
+    return this.http.delete(this.apiUrl + url, httpPackage);
+  }
 }

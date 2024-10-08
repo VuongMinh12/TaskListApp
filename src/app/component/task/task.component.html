@@ -1,38 +1,59 @@
 <div class="martab">
   <mat-toolbar color="primary">
     <span>Task Management </span>
-    <button type="button" class="btn btn-success  btn-lg" style="margin-right:0px; margin-left: auto;">Add a new Task</button>
+    <button type="button" class="btn btn-success " (click)="OpenEditAddTask({}, 2)"
+      style="margin-right:0px; margin-left: auto;">Add a new Task</button>
+    <button type="button" class="btn btn-danger" (click)="Logout()"
+      style="margin-right:0px; margin-left: 30px;">Logout</button>
   </mat-toolbar>
-    <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource">
 
-      <!-- Position Column -->
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" >
+
       <ng-container matColumnDef="No">
         <th mat-header-cell *matHeaderCellDef> No. </th>
         <td mat-cell *matCellDef="let element"> {{element.no}} </td>
       </ng-container>
 
-      <!-- Name Column -->
       <ng-container matColumnDef="Title">
-        <th mat-header-cell *matHeaderCellDef> Title </th>
+        <th mat-header-cell *matHeaderCellDef>
+          <div>Title</div>
+          <input type="text" class="form-control" [(ngModel)] = "TitleInput"
+            (keyup)="loadAllTask()" style="width: 80%;">
+        </th>
         <td mat-cell *matCellDef="let element"> {{element.title}} </td>
       </ng-container>
 
-      <!-- Weight Column -->
       <ng-container matColumnDef="Status">
-        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <th mat-header-cell *matHeaderCellDef>
+          <div>
+            Status
+            <b class="clear-btn" (click)="clearStatus()">X</b>
+            </div>
+          <select class="form-control" [(ngModel)]="StatusInput" required
+            (click)="loadAllTask()" style="width: 80%;">
+              <option *ngFor="let status of statusList" [value]="status.statusId">
+                {{status.statusName}}
+              </option>
+          </select>
+        </th>
         <td mat-cell *matCellDef="let element"> {{element.statusName}} </td>
       </ng-container>
 
-      <!-- Symbol Column -->
       <ng-container matColumnDef="CreateDate">
-        <th mat-header-cell *matHeaderCellDef> CreateDate </th>
+        <th mat-header-cell *matHeaderCellDef>
+          <div>CreateDate</div>
+          <input type="date" class="form-control" [(ngModel)]="CreateDateInput" (change)="loadAllTask()">
+        </th>
         <td mat-cell *matCellDef="let element"> {{getFormatedDate(element.createDate, "dd/MM/yyyy")}} </td>
       </ng-container>
 
       <ng-container matColumnDef="FinishDate">
-        <th mat-header-cell *matHeaderCellDef> FinishDate </th>
-        <td mat-cell *matCellDef="let element"> {{getFormatedDate(element.finishDate, "dd/MM/yyyy")}}  </td>
+        <th mat-header-cell *matHeaderCellDef>
+          <div>FinishDate</div>
+          <input type="date" class="form-control" [(ngModel)]="EndDateInput" (change)="loadAllTask()">
+        </th>
+        <td mat-cell *matCellDef="let element"> {{getFormatedDate(element.finishDate, "dd/MM/yyyy")}} </td>
       </ng-container>
 
       <ng-container matColumnDef="Estimate">
@@ -42,73 +63,79 @@
 
       <ng-container matColumnDef="Edit">
         <th mat-header-cell *matHeaderCellDef> Edit </th>
-        <td mat-cell *matCellDef="let row">
-          <span class="action-icon" style="margin-right: 5px;">
-            <mat-icon color="primary" (click)="OpenEditTask(element)">edit</mat-icon>
+        <td mat-cell *matCellDef="let element">
+          <span class="action-icon" style="margin-right: 5px;" (click)="OpenEditAddTask(element, 1)">
+            <mat-icon color="primary" >edit</mat-icon>
           </span>
-
         </td>
-
       </ng-container>
 
       <ng-container matColumnDef="Delete">
         <th mat-header-cell *matHeaderCellDef> Delete </th>
-        <td mat-cell *matCellDef="let row">
-          <span class="action-icon">
+        <td mat-cell *matCellDef="let element ">
+          <span class="action-icon" (click)="DeleteTask(element.taskId)">
             <mat-icon color="warn">delete</mat-icon>
           </span>
         </td>
       </ng-container>
 
-
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
-    <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons aria-label="Select page of periodic elements">
+    <mat-paginator [pageSizeOptions]="[10, 20, 50]"
+      showFirstLastButtons aria-label="Select page of periodic elements">
     </mat-paginator>
   </div>
 </div>
 
-
+<!-- Modal -->
 <div class="modal" id="ModalEdit">
   <div class="modal-dialog modal-dialog-centered  ">
     <div class="modal-content">
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Edit Task</h4>
+        <h4 class="modal-title">Task</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="CloveEditAddTask()"></button>
       </div>
       <!-- Modal body -->
       <div class="modal-body">
-
-        <form >
+        <div class="form-group">
           <label>Title </label>
-          <input type="text">
-          <label> Status</label>
-          <input>
-          <label> Create Date</label>
-          <p-calendar [(ngModel)]="model.CreateDate"
-          dateFormat="dd/mm/yy" [showIcon]="true" [appendTo]="'body'" [iconDisplay]="'input'"></p-calendar>
-          <label> Finish Date</label>
-          <input type="date">
-          <label> Estimate</label>
-          <input type="number">
-        </form>
+          <input class="form-control" type="text" [(ngModel)]="updateModel.Title" required>
+        </div>
 
+        <div class="form-group">
+          <label> Status</label>
+          <select class="form-control" [(ngModel)]="updateModel.StatusId" required>
+            <option *ngFor="let status of statusList" [value]="status.statusId">
+              {{status.statusName}}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label> Create Date</label>
+          <input type="date" class="form-control" [(ngModel)]="editCreateDate" required>
+        </div>
+
+        <div class="form-group">
+          <label> Finish Date</label>
+          <input type="date" class="form-control" [(ngModel)]="editEndDate" required>
+        </div>
+
+        <div class="form-group">
+          <label> Estimate</label>
+          <input class="form-control" type="number" [(ngModel)]="updateModel.Estimate" required>
+        </div>
       </div>
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button class="btn btn-success">Edit</button>
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="CloveEditTask()">Close</button>
+        <button class="btn btn-success" (click)="OnSave()">Save</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+          (click)="CloveEditAddTask()">Close</button>
       </div>
 
     </div>
   </div>
 </div>
-
-
-
-
-
-
-

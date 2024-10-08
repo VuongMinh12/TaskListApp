@@ -1,49 +1,49 @@
-<router-outlet>
 
-  <div class="row">
-    <div class="col-md-4 offset-md-4 col-sm-6 offset-sm-3">
-      <div class="card auth">
-        <div class="card-body auth-card">
-          <div class="auth-avatar">
-            <img src="https://pluspng.com/img-png/user-png-icon-account-avatar-human-male-man-men-people-person-download-svg-download-png-edit-icon-512.png" alt="user" class="user-image">
+  <div class="outer" >
+    <div class="container">
+      <div class="row">
+        <div class="offset-md-2 col-lg-5 col-md-7 offset-lg-4 offset-md-3">
+          <div class="panel border bg-white">
+            <div class="panel-heading">
+              <h3 class="pt-5 font-weight-bold">SignUp</h3>
+            </div>
+            <div class="panel-body p-3">
+              <div class="form-group pt-2">
+                <div class="input-field sign-up"> <span class="fa fa-lock px-2"></span>
+                  <input type="text" (change)="validateMail()"
+                  placeholder="Email" [(ngModel)]="inputEmail" (keyup.enter)="signup()" required>
+                </div>
+              </div>
+              <div class="form-group pt-2 " >
+                <div class="input-field sign-up" > <span class="fa fa-user px-2"></span>
+                  <input type="text" placeholder="Username" [(ngModel)]="inputUName" required
+                    (keyup.enter)="signup()">
+                </div>
+              </div>
+              <div class="form-group pt-2">
+                <div class="input-field sign-up"> <span class="fa fa-lock px-2"></span>
+                  <input type="password" placeholder="Password" [(ngModel)]="inputPw" required
+                    (keyup.enter)="signup()">
+                </div>
+              </div>
+              <div class="form-group pt-2">
+                <div class="input-field sign-up"> <span class="fa fa-lock px-2"></span>
+                  <input type="password" placeholder="Confirm Password" [(ngModel)]="inputPwCheck" required
+                    (keyup.enter)="signup()">
+                </div>
+              </div>
+
+              <div class="form-inline fr mt-2">
+                <a id="forgot" routerLink="/forgotpassword">Forgot password?</a>
+              </div>
+              <button (click)="signup()" class="btn btn-primary btn-block mt-4 w-100">Signup</button>
+              <button class="text-center pt-2 text-muted" routerLink="/login"
+              class="btn btn-primary btn-block mt-8 w-10" style="margin-left: 42%;">Login</button>
+              </div>
+
           </div>
-          <form >
-            <!-- (submit)="signUp(userData)" -->
-              <div class="form-group">
-                <label for="name">Name : </label>
-                <input type="text" name="name" class="form-control" placeholder="Name" >
-                <!-- [(ngModel)]="userData.name" -->
-              </div>
-              <div class="form-group">
-                <label for="email">Email : </label>
-                <input type="text" name="email" class="form-control" placeholder="Email" >
-                <!-- [(ngModel)]="userData.email" -->
-              </div>
-              <div class="form-group">
-                <label for="password">Password : </label>
-                <input type="password" name="password" class="form-control" placeholder="********" >
-                <!-- [(ngModel)]="userData.password" -->
-              </div>
-              <div class="form-group">
-                <label for="c_password">Confirm Password : </label>
-                <input type="password" name="c_password" class="form-control" placeholder="********" >
-                <!-- [(ngModel)]="userData.c_password" -->
-              </div>
-              <div class="text-center">
-                <input type="submit" class="btn btn-my" value="Sign Up">
-              </div>
-              <div class="text-center login">
-                Already have an account ? <a routerLink="login">Login</a> hera.
-              </div>
-
-          </form>
         </div>
       </div>
     </div>
   </div>
-
-</router-outlet>
-
-
-
 

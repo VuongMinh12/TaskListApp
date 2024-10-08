@@ -75,12 +75,6 @@ img {
   position: relative
 }
 
-
-/* a[target='_blank'] {
-position: relative;
-transition: all 0.1s ease-in-out
-} */
-
 .bordert {
   border-top: 1px solid #aaa;
   position: relative
@@ -112,15 +106,12 @@ transition: all 0.1s ease-in-out
 }
 
 
-/* Added Css for eye icon button */
 
 .bg-white {
   background: none;
   border: none;
 }
 
-
-/* added height css for ngtoast */
 
 .toast-right-top {
   height: auto !important;
