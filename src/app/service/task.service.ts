@@ -1,7 +1,7 @@
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ServiceInvoker } from './serviceInvocer';
+import { ServiceInvoker } from './serviceInvoker';
 
 
 @Injectable({
