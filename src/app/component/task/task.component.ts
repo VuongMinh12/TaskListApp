@@ -12,7 +12,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { RouterModule, Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-task',
   standalone: true,
@@ -48,7 +47,7 @@ export class TaskComponent implements OnInit {
 
   PageNumber = 1;
   PageSize = 50;
-  TitleInput: string = '';
+  TitleInput: string = "";
   StatusInput: number = 2;
   CreateDateInput: Date | null = null;
   EndDateInput: Date | null = null;
