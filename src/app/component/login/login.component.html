@@ -10,7 +10,8 @@
 
             <div class="form-group pt-3 " style="margin-top: 0px;">
               <div class="input-field" style="padding: 0px;"> <span class="fa fa-user px-2"></span>
-                <input type="text" placeholder="Username" [(ngModel)]="inputUName" required style="padding: 0px;"
+                <input type="text" placeholder="Email" (change)="validateMail()"
+                [(ngModel)]="inputEmail" required style="padding: 0px;"
                   (keyup.enter)="login()">
                 <span class="material-icons" style="padding: 13px;">
                   account_circle

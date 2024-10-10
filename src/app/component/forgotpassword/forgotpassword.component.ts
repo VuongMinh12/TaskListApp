@@ -29,7 +29,8 @@ export class ForgotpasswordComponent implements OnInit {
   ){}
   ngOnInit(): void {  }
 
-  inputUName = "";
+  inputFName = "";
+  inputLName = "";
   inputPw = "";
   inputPwCheck = "";
   inputEmail = "";
@@ -37,20 +38,19 @@ export class ForgotpasswordComponent implements OnInit {
   validateMail() {
     const emailPattern = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/;
     if (!emailPattern.test(this.inputEmail)) {
-      alert('Email không hợp lệ! Hay nhap lai thong tin');
-      this.inputEmail = "";
-      // Có thể hiển thị thông báo lỗi cho người dùng ở đây
+      alert('Email không hợp lệ! Hãy nhập lại thông tin');
     }
   }
 
   UpdatePass(){
-    if (this.inputEmail != "" && this.inputUName != "" && this.inputPw != "" && this.inputPwCheck != "") {
+    if (this.inputEmail != "" && this.inputFName != "" && this.inputLName != "" && this.inputPw != "" && this.inputPwCheck != "") {
       if (this.inputPw !== this.inputPwCheck) {
         alert('Mật khẩu không khớp!');
         return;
       }
       let request = {
-        Username: this.inputUName,
+        FirstName: this.inputFName,
+        LastName: this.inputLName,
         Password: this.inputPw,
         Email: this.inputEmail,
         RoleId : 1

@@ -26,29 +26,33 @@ export class SignupComponent implements OnInit {
 
   constructor(
     private service : LoginService,
-    private router : Router
+    private router : Router,
   ){}
 
-  inputUName = "";
+  inputEmail = "";
+  inputFName = "";
+  inputLName = "";
   inputPw = "";
   inputPwCheck = "";
-  inputEmail = "";
 
   clearInput(){
-    this.inputUName = "";
+    this.inputEmail = "";
+    this.inputFName = "";
+    this.inputLName != "";
     this.inputPw = "";
     this.inputPwCheck = "";
-    this.inputEmail = "";
+
   }
 
   signup() {
-    if (this.inputEmail != "" && this.inputUName != "" && this.inputPw != "" && this.inputPwCheck != "") {
+    if (this.inputEmail != "" && this.inputFName != "" && this.inputLName != "" && this.inputPw != "" && this.inputPwCheck != "") {
       if (this.inputPw !== this.inputPwCheck) {
         alert('Mật khẩu không khớp!');
         return;
       }
       let request = {
-        Username: this.inputUName,
+        Firstname: this.inputFName,
+        Lastname: this.inputLName,
         Password: this.inputPw,
         Email: this.inputEmail,
         RoleId : 1
@@ -70,8 +74,7 @@ export class SignupComponent implements OnInit {
   validateMail() {
     const emailPattern = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/;
     if (!emailPattern.test(this.inputEmail)) {
-      alert('Email không hợp lệ! Hay nhap lai thong tin');
-      this.inputEmail = "";
+      alert('Email không hợp lệ! Hãy nhập lại thông tin');
     }
   }
 }

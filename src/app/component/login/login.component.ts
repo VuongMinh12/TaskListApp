@@ -23,7 +23,7 @@ import { MatInputModule } from '@angular/material/input';
   styleUrl: './login.component.css',
 })
 export class LoginComponent implements OnInit {
-  inputUName: string = '';
+  inputEmail: string = '';
   inputPw: string = '';
 
   constructor(private service: LoginService, private router: Router) {}
@@ -31,11 +31,11 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   login() {
-    if (this.inputUName == '' || this.inputPw == '')
+    if (this.inputEmail == '' || this.inputPw == '')
       alert('Vui lòng nhập đầy đủ thông tin');
-    else if (this.inputUName != '' || this.inputPw != '') {
+    else if (this.inputEmail != '' || this.inputPw != '') {
       let request = {
-        username: this.inputUName,
+        email: this.inputEmail,
         password: this.inputPw,
       };
 
@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/taskboard']);
         } else {
           alert(response.message);
-          this.inputUName == "", this.inputPw == "";
+          this.inputEmail == "", this.inputPw == "";
         }
       });
     }
@@ -55,5 +55,11 @@ export class LoginComponent implements OnInit {
   clickEvent(event: MouseEvent) {
     this.hide.set(!this.hide());
     event.stopPropagation();
+  }
+  validateMail() {
+    const emailPattern = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/;
+    if (!emailPattern.test(this.inputEmail)) {
+      alert('Email không hợp lệ! Hãy nhập lại email');
+    }
   }
 }

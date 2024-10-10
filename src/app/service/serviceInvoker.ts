@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ServiceInvoker {
-
-  apiUrl : string = 'http://localhost:8009/api/';
+  // 5058 8009
+  apiUrl : string = 'http://localhost:5058/api/';
   constructor(private http: HttpClient) { }
 
   private getAuthHeaders(): HttpHeaders {
@@ -22,7 +22,6 @@ export class ServiceInvoker {
     if (request == undefined || request == "") request = {};
 
     request.currUserId = localStorage.getItem("UserId");
-    request.currUserName = localStorage.getItem("Username");
     request.UserRole = localStorage.getItem("RoleId");
 
     const httpPackage = {
@@ -37,7 +36,6 @@ export class ServiceInvoker {
     if (request == undefined || request == "") request = {};
 
     request.currUserId = localStorage.getItem("UserId");
-    request.currUserName = localStorage.getItem("Username");
 
     const httpPackage = request;
 
@@ -52,7 +50,6 @@ export class ServiceInvoker {
     if (request == undefined || request == "") request = {};
 
     request.currUserId = localStorage.getItem("UserId");
-    request.currUserName = localStorage.getItem("Username");
 
     const httpPackage = request;
 
@@ -66,8 +63,6 @@ export class ServiceInvoker {
     if (request == undefined || request == "") request = {};
 
     request.currUserId = localStorage.getItem("UserId");
-    request.currUserName = localStorage.getItem("Username");
-    request.UserRole = localStorage.getItem("RoleId");
 
     const httpPackage = {
       headers: this.getAuthHeaders(),
