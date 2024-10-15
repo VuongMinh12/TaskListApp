@@ -23,6 +23,7 @@ export class ServiceInvoker {
 
     request.currUserId = localStorage.getItem("UserId");
     request.UserRole = localStorage.getItem("RoleId");
+    request.currEmail = localStorage.getItem("Email");
 
     const httpPackage = {
       params: request,

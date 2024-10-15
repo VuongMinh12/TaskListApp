@@ -1,0 +1,63 @@
+<div class="container">
+  <table class="table table-dark table-hover">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Title</th>
+        <th>Status</th>
+        <th>Create Date</th>
+        <th>Finish Date</th>
+        <th>Estimate</th>
+        <th>Assignee</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of tasks">
+        <td><span> {{task.no}}</span></td>
+        <td><span>{{task.title}}</span></td>
+        <td><span>{{task.statusName}}</span></td>
+        <!-- <td><select [(ngModel)]="assigneeList[task.id]"></select></td> -->
+        <td><span>{{ getFormatedDate(task.createDate , "dd/MM/yyyy") }}</span></td>
+        <td><span>{{ getFormatedDate(task.finishDate , "dd/MM/yyyy") }}</span></td>
+        <td><span>{{task.estimate}}</span></td>
+        <!-- <td>  {{ userList[assigneeList[task.taskId][0]] }}</td> -->
+        <td>
+          <span>
+          <!-- <i class="fa-solid fa-circle-user"></i> -->
+          <ng-multiselect-dropdown
+            [placeholder]="'Select Users'"
+            [settings]="dropdownSettings"
+            [data]="dropdownList"
+            [(ngModel)]="assigneeList[task.taskId]"
+            (onSelect)="onItemSelect($event, task.taskId)"
+            (onSelectAll)="onSelectAll($event, task.taskId)"
+            >
+          </ng-multiselect-dropdown>
+        </span>
+        </td>
+
+        <td> <button class="btn btn-sm btn-warning">
+            <i class="fas fa-edit"></i> Edit</button>
+        </td>
+        <td>
+          <button class="btn btn-sm btn-danger">
+            <i class="fa fa-trash"></i>Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div>
+    <mat-paginator
+    [length]="totalTasks"
+    [pageSize]="PageSize"
+    [pageSizeOptions]="[10, 20, 50]"
+    showFirstLastButtons
+    aria-label="Select page of periodic elements">
+  </mat-paginator>
+  </div>
+</div>
+
+
+

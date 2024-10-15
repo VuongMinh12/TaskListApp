@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
       this.service.Login(request).subscribe((response: any) => {
         if (response.status == 1) {
           this.service.setUserInfoLocalStorage(response);
-          this.router.navigate(['/taskboard']);
+          this.router.navigate(['/tasklist']);
         } else {
           alert(response.message);
           this.inputEmail == "", this.inputPw == "";

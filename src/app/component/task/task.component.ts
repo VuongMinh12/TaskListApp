@@ -81,8 +81,7 @@ export class TaskComponent implements OnInit {
       pageSize: this.PageSize,
       title: this.TitleInput.toLowerCase(),
       statusId: this.StatusInput,
-      createDate:
-        this.CreateDateInput == null? '': this.getFormatedDate(this.CreateDateInput, 'yyyy/MM/dd'),
+      createDate:this.CreateDateInput == null? '': this.getFormatedDate(this.CreateDateInput, 'yyyy/MM/dd'),
       finishDate: this.EndDateInput == null? '': this.getFormatedDate(this.EndDateInput, 'yyyy/MM/dd'),
     };
     this.service.GetListTask(request).subscribe(
