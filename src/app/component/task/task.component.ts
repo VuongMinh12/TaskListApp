@@ -6,11 +6,13 @@ import { Task, TaskUpdateAddCreate } from '../../model/task';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TaskService } from '../../service/task.service';
-import { DatePipe, NgFor } from '@angular/common';
+import { CommonModule, DatePipe, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { RouterModule, Router } from '@angular/router';
+import { UserService } from '../../service/user.service';
+import { IDropdownSettings, NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'app-task',
@@ -27,12 +29,15 @@ import { RouterModule, Router } from '@angular/router';
     MatSelectModule,
     NgFor,
     RouterModule,
-
+    CommonModule,
+    NgMultiSelectDropDownModule,
   ],
   templateUrl: './task.component.html',
   styleUrl: './task.component.css',
 })
 export class TaskComponent implements OnInit {
+
+
   displayedColumns: string[] = [
     'No',
     'Title',
@@ -40,14 +45,16 @@ export class TaskComponent implements OnInit {
     'CreateDate',
     'FinishDate',
     'Estimate',
+    'Assignee',
     'Edit',
     'Delete',
   ];
+
   dataSource: MatTableDataSource<Task> = new MatTableDataSource();
 
   PageNumber = 1;
-  PageSize = 50;
-  TitleInput: string = "";
+  PageSize = 1000;
+  TitleInput: string = '';
   StatusInput: number = 2;
   CreateDateInput: Date | null = null;
   EndDateInput: Date | null = null;
@@ -58,16 +65,28 @@ export class TaskComponent implements OnInit {
   editOrAdd: number = 1;
   statusList: any[] = [];
 
-  editCreateDate: string = "";
-  editEndDate: string = "";
+  editCreateDate: string = '';
+  editEndDate: string = '';
 
-  constructor(private service: TaskService, private router: Router, ) {}
+  userList: { [key: number]: string } = {};
+  assigneeList: { [key: number]: { item_id: number; item_text: string }[] } ={};
+  dropdownList: { item_id: number; item_text: string }[] = [];
+  selectedItems: { [key: number]: { item_id: number; item_text: string }[] } ={};
+
+  constructor(
+    private service: TaskService,
+    private router: Router,
+    private userService: UserService
+  ) {}
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
   ngOnInit() {
+    this.initializeDropdownSettings();
     this.loadStatus();
     this.loadAllTask();
+    this.loadUser();
+    this.loadTaskUser();
   }
 
   clearStatus() {
@@ -81,8 +100,14 @@ export class TaskComponent implements OnInit {
       pageSize: this.PageSize,
       title: this.TitleInput.toLowerCase(),
       statusId: this.StatusInput,
-      createDate:this.CreateDateInput == null? '': this.getFormatedDate(this.CreateDateInput, 'yyyy/MM/dd'),
-      finishDate: this.EndDateInput == null? '': this.getFormatedDate(this.EndDateInput, 'yyyy/MM/dd'),
+      createDate:
+        this.CreateDateInput == null
+          ? ''
+          : this.getFormatedDate(this.CreateDateInput, 'yyyy/MM/dd'),
+      finishDate:
+        this.EndDateInput == null
+          ? ''
+          : this.getFormatedDate(this.EndDateInput, 'yyyy/MM/dd'),
     };
     this.service.GetListTask(request).subscribe(
       (data) => {
@@ -120,13 +145,12 @@ export class TaskComponent implements OnInit {
       task: this.updateModel,
     };
     if (
-      this.updateModel.Title != "" &&
+      this.updateModel.Title != '' &&
       this.updateModel.StatusId != null &&
       this.updateModel.CreateDate != null &&
       this.updateModel.FinishDate != null &&
       this.updateModel.Estimate != null
     ) {
-
       if (this.updateModel.CreateDate > this.updateModel.FinishDate) {
         alert('CreateDate không được lớn hơn FinishDate');
         this.updateModel.CreateDate.getDay();
@@ -134,7 +158,6 @@ export class TaskComponent implements OnInit {
       } else {
         if (this.updateModel.Estimate <= 0) {
           alert('Estimate phải lớn hơn 0');
-
         } else {
           if (this.editOrAdd == 1) {
             this.service.EditTask(request).subscribe((reponse) => {
@@ -160,10 +183,10 @@ export class TaskComponent implements OnInit {
     }
   }
 
-  getFormatedDate(date: Date| null, format: string) : string {
+  getFormatedDate(date: Date | null, format: string): string {
     const datePipe = new DatePipe('en-US');
     let temp = datePipe.transform(date, format);
-    if (temp == null) return ""
+    if (temp == null) return '';
     return temp;
   }
 
@@ -172,8 +195,14 @@ export class TaskComponent implements OnInit {
     this.editOrAdd = type;
     const modalAdd = document.getElementById('ModalEdit');
     this.updateModel = new TaskUpdateAddCreate(element);
-    this.editCreateDate = this.getFormatedDate(this.updateModel.CreateDate, 'yyyy-MM-dd');
-    this.editEndDate = this.getFormatedDate(this.updateModel.FinishDate, 'yyyy-MM-dd');
+    this.editCreateDate = this.getFormatedDate(
+      this.updateModel.CreateDate,
+      'yyyy-MM-dd'
+    );
+    this.editEndDate = this.getFormatedDate(
+      this.updateModel.FinishDate,
+      'yyyy-MM-dd'
+    );
     if (modalAdd != null) {
       modalAdd.style.display = 'block';
     }
@@ -195,7 +224,7 @@ export class TaskComponent implements OnInit {
         console.log(id);
         if (reponse.status == 1) {
           this.loadAllTask();
-          reponse.message
+          reponse.message;
         }
         alert(reponse.message);
       });
@@ -205,6 +234,60 @@ export class TaskComponent implements OnInit {
   Logout() {
     localStorage.clear();
     this.router.navigate(['/login']);
+  }
+
+  loadUser() {
+    let request = {};
+    this.userService.GetAllUser(request).subscribe((response) => {
+      var users: any[] = response.users;
+
+      this.dropdownList = users.map((user) => ({
+        item_id: user.userId,
+        item_text: user.email,
+      }));
+
+      users.forEach((a) => {
+        if (!this.userList.hasOwnProperty(a.userId)) {
+          this.userList[a.userId] = '';
+        }
+        this.userList[a.userId] = a.email;
+      });
+    });
+  }
+
+  loadTaskUser() {
+    let request = {};
+    this.userService.GetUserTask(request).subscribe((response: any[]) => {
+      response.forEach((a) => {
+        this.assigneeList[a.taskId] = this.assigneeList[a.taskId] ?? [];
+
+        var temp: { item_id: number; item_text: string } = {
+          item_id: 0,
+          item_text: '',
+        };
+        temp.item_id = a.userId;
+        temp.item_text = this.userList[a.userId];
+
+        this.assigneeList[a.taskId].push(temp);
+
+        this.selectedItems[a.taskId] = this.assigneeList[a.taskId];
+      });
+    });
+  }
+
+
+
+  dropdownSettings: IDropdownSettings = {};
+  initializeDropdownSettings(): void {
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'item_id',
+      textField: 'item_text',
+      selectAllText: 'Select All',
+      unSelectAllText: 'Unselect All',
+      itemsShowLimit: 10,
+      allowSearchFilter: true
+    };
   }
 
 }

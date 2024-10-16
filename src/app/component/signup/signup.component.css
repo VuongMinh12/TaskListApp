@@ -1,131 +1,78 @@
-.fr {
-  display: block;
-  float: right;
+body {
+  background-color: #121212;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
 }
 
 .outer {
-  height: 100vh;
-  background: linear-gradient(to top, #c9c9ff 50%, #6e6ef6 90%) no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  width: 100%;
+}
+
+.panel {
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  padding: 30px;
 }
 
 .panel-heading {
   text-align: center;
-  margin-bottom: 10px
 }
 
-#forgot {
-  min-width: 100px;
-  margin-left: auto;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-a:hover {
-  text-decoration: none
-}
-
-.form-inline label {
-  padding-left: 10px;
-  margin: 0;
-  cursor: pointer
-}
-
-.btn {
-  margin-top: 10px;
-  border-radius: 15px
-}
-
-.panel {
-  min-height: 380px;
-  box-shadow: 20px 20px 80px rgb(218, 218, 218);
-  border-radius: 12px;
-  margin-top: 100px
+.panel-heading h3 {
+  color: #ffffff;
 }
 
 .input-field {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.input-field input {
+  width: 100%;
+  padding: 10px;
+  background-color: #333;
+  color: #ffffff;
+  border: none;
   border-radius: 5px;
-  padding: 5px;
+  box-sizing: border-box;
+}
+
+.btn-primary {
+  background-color: #6200ea;
+  color: #ffffff;
+  margin-top: 20px; /* Khoảng cách trên nút Signup */
+}
+
+.btn-primary:hover {
+  background-color: #3700b3;
+}
+
+.text-muted {
+  color: #ffffff !important;
+  text-align: center;
+}
+
+.text-muted a {
+  color: #6200ea; /* Màu cho liên kết */
+  text-decoration: none; /* Không có gạch chân */
+}
+
+.btn-link {
+  color: #6200ea; /* Màu cho nút Login */
+  text-decoration: none; /* Loại bỏ gạch chân */
+}
+.form-inline {
   display: flex;
-  align-items: center;
-  cursor: pointer;
-  border: 1px solid #ddd;
-  color: #4343ff
+  justify-content: flex-end; /* Căn chỉnh các phần tử bên phải */
 }
 
-.input-field.error {
-  border: 1px solid red;
-  color: red;
-}
-
-input[type='text'],
-input[type='password'] {
-
-  border: none;
-  outline: none;
-  box-shadow: none;
-  width: 100%
-}
-
-
-img {
-  width: 40px;
-  height: 40px;
-  object-fit: cover;
-  border-radius: 50%;
-  position: relative
-}
-
-
-/* a[target='_blank'] {
-position: relative;
-transition: all 0.1s ease-in-out
-} */
-
-.bordert {
-  border-top: 1px solid #aaa;
-  position: relative
-}
-
-.bordert:after {
-  content: "or connect with";
-  position: absolute;
-  top: -13px;
-  left: 33%;
-  background-color: #fff;
-  padding: 0px 8px
-}
-
-@media(max-width: 360px) {
-  #forgot {
-      margin-left: 0;
-      padding-top: 10px
-  }
-  body {
-      height: 100%
-  }
-  .container {
-      margin: 30px 0
-  }
-  .bordert:after {
-      left: 25%
-  }
-}
-
-
-/* Added Css for eye icon button */
-
-.bg-white {
-  background: none;
-  border: none;
-}
-
-
-/* added height css for ngtoast */
-
-.toast-right-top {
-  height: auto !important;
-}
-
-.sign-up input, .sign-up input:focus{
-  border: none !important;
+a#forgot {
+  color: #6200ea; /* Màu chữ cho liên kết */
+  text-decoration: none; /* Không có gạch chân */
+  margin-left: auto; /* Tạo khoảng cách tự động để đẩy sang bên phải */
 }

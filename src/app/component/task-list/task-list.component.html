@@ -25,17 +25,12 @@
         <!-- <td>  {{ userList[assigneeList[task.taskId][0]] }}</td> -->
         <td>
           <span>
-          <!-- <i class="fa-solid fa-circle-user"></i> -->
-          <ng-multiselect-dropdown
-            [placeholder]="'Select Users'"
-            [settings]="dropdownSettings"
-            [data]="dropdownList"
-            [(ngModel)]="assigneeList[task.taskId]"
-            (onSelect)="onItemSelect($event, task.taskId)"
-            (onSelectAll)="onSelectAll($event, task.taskId)"
-            >
-          </ng-multiselect-dropdown>
-        </span>
+            <!-- <i class="fa-solid fa-circle-user"></i> -->
+            <ng-multiselect-dropdown [placeholder]="'Select Users'" [settings]="dropdownSettings" [data]="dropdownList"
+              [(ngModel)]="assigneeList[task.taskId]" (onSelect)="onItemSelect($event, task.taskId)"
+              (onSelectAll)="onSelectAll($event, task.taskId)">
+            </ng-multiselect-dropdown>
+          </span>
         </td>
 
         <td> <button class="btn btn-sm btn-warning">
@@ -48,16 +43,14 @@
       </tr>
     </tbody>
   </table>
-  <div>
-    <mat-paginator
-    [length]="totalTasks"
-    [pageSize]="PageSize"
-    [pageSizeOptions]="[10, 20, 50]"
-    showFirstLastButtons
-    aria-label="Select page of periodic elements">
-  </mat-paginator>
-  </div>
 </div>
 
-
-
+<div>
+  <mat-paginator [pageSizeOptions]="[10, 20, 50]"
+                  [pageSize]="PageSize"
+                  [length]="totalTasks"
+                  [pageIndex]="PageNumber - 1"
+                  showFirstLastButtons
+                  (page)="onPageChange($event)">
+  </mat-paginator>
+</div>

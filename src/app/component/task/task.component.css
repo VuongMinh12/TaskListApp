@@ -1,10 +1,11 @@
 .martab{
-  padding-left: 5%;
-  padding-right: 5%;
+  padding-left: 3%;
+  padding-right: 3%;
   padding-top: 1%;
 }
 table {
   width: 100%;
+
 }
 .modal-body div {
   display: flex;
@@ -36,3 +37,31 @@ table {
   color: white;
   transition-duration: 0.5s;
 }
+
+::ng-deep .table ,::ng-deep .table-dark , ::ng-deep.table-hover ::ng-deep.table-primary {
+  border: 1px solid #212529 !important;
+  text-align: center !important;
+}
+
+::ng-deep.table-primary{
+  border: 1px #212529 !important;
+  text-align: center !important;
+  padding-bottom: auto !important;
+}
+
+.dropdown-custom {
+  width: 68%;
+
+}
+::ng-deep .multiselect-dropdown span , ::ng-deep .selected-item-container *{
+  background-color: #ffffff !important;
+  border: 1px solid #ffffff !important;
+  color : black;
+  width: 70%;
+}
+::ng-deep .selected-item-container{
+  max-width: 100%;
+}
+
+
+

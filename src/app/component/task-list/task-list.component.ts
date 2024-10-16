@@ -31,7 +31,7 @@ export class TaskListComponent implements OnInit {
   dropdownSettings: IDropdownSettings = {};
 
   PageNumber = 1;
-  PageSize = 10;
+  PageSize = 100;
   TitleInput: string = "";
   StatusInput: number = 0;
   CreateDateInput: Date | null = null;
@@ -46,7 +46,7 @@ export class TaskListComponent implements OnInit {
     this.loadAllTask();
     this.loadTaskUser();
     this.loadStatus();
-    console.log("taskList\n",this.assigneeList);
+    console.log(this.totalTasks);
   }
 
   initializeDropdownSettings(): void {
@@ -103,7 +103,7 @@ export class TaskListComponent implements OnInit {
   loadAllTask() {
     var request = {
       pageNumber: this.PageNumber,
-      pageSize: this.PageSize,
+      pageSize: 1000,
       title: this.TitleInput.toLowerCase(),
       statusId: this.StatusInput,
       createDate: this.CreateDateInput == null ? "" : this.getFormatedDate(this.CreateDateInput, 'yyyy/MM/dd'),
@@ -112,7 +112,7 @@ export class TaskListComponent implements OnInit {
     this.service.GetListTask(request).subscribe(
       (response: any) => {
         this.tasks = response;
-        response.totalCount = this.totalTasks ;
+        this.totalTasks = response.length;
       },
       (error) => {
         console.log(error);
@@ -152,4 +152,11 @@ export class TaskListComponent implements OnInit {
     console.log("taskList\n",this.assigneeList);
     // this.assigneeList[taskId] = items.map(item => item.item_id);
   }
+
+  onPageChange(event: any): void {
+    this.PageNumber = event.pageIndex + 1; // MatPaginator dùng 0-based index
+    this.PageSize = event.pageSize;
+    this.loadAllTask(); // Tải lại danh sách nhiệm vụ
+  }
+
 }
