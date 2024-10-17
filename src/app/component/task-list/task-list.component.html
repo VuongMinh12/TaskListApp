@@ -8,7 +8,6 @@
         <th>Create Date</th>
         <th>Finish Date</th>
         <th>Estimate</th>
-        <th>Assignee</th>
         <th>Edit</th>
         <th>Delete</th>
       </tr>
@@ -22,17 +21,6 @@
         <td><span>{{ getFormatedDate(task.createDate , "dd/MM/yyyy") }}</span></td>
         <td><span>{{ getFormatedDate(task.finishDate , "dd/MM/yyyy") }}</span></td>
         <td><span>{{task.estimate}}</span></td>
-        <!-- <td>  {{ userList[assigneeList[task.taskId][0]] }}</td> -->
-        <td>
-          <span>
-            <!-- <i class="fa-solid fa-circle-user"></i> -->
-            <ng-multiselect-dropdown [placeholder]="'Select Users'" [settings]="dropdownSettings" [data]="dropdownList"
-              [(ngModel)]="assigneeList[task.taskId]" (onSelect)="onItemSelect($event, task.taskId)"
-              (onSelectAll)="onSelectAll($event, task.taskId)">
-            </ng-multiselect-dropdown>
-          </span>
-        </td>
-
         <td> <button class="btn btn-sm btn-warning">
             <i class="fas fa-edit"></i> Edit</button>
         </td>

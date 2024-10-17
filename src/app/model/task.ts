@@ -15,7 +15,7 @@ export class TaskUpdateAddCreate {
   CreateDate : Date;
   FinishDate : Date;
   Estimate : number;
-
+  listUser: any[] = [];
 
   constructor(temp: any){
     this.TaskId = temp.taskId;
@@ -24,6 +24,6 @@ export class TaskUpdateAddCreate {
     this.CreateDate = temp.createDate;
     this.FinishDate = temp.finishDate;
     this.Estimate = temp.estimate;
-
+    this.listUser = temp.listUser;
   }
 }

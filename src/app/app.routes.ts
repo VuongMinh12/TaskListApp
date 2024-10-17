@@ -4,6 +4,7 @@ import { TaskComponent } from './component/task/task.component';
 import { SignupComponent } from './component/signup/signup.component';
 import { ForgotpasswordComponent } from './component/forgotpassword/forgotpassword.component';
 import { TaskListComponent } from './component/task-list/task-list.component';
+import { NotfoundComponent } from './component/notfound/notfound.component';
 
 
 export const routes: Routes = [
@@ -13,6 +14,7 @@ export const routes: Routes = [
   { path: 'forgotpassword', component: ForgotpasswordComponent },
   { path: 'taskboard', component: TaskComponent },
   { path: 'tasklist', component: TaskListComponent },
+  {path: '**' ,pathMatch: 'full', component: NotfoundComponent},
 
 ];
 

@@ -37,6 +37,8 @@ export class ServiceInvoker {
     if (request == undefined || request == "") request = {};
 
     request.currUserId = localStorage.getItem("UserId");
+    request.UserRole = localStorage.getItem("RoleId");
+    request.currEmail = localStorage.getItem("Email");
 
     const httpPackage = request;
 
@@ -51,6 +53,8 @@ export class ServiceInvoker {
     if (request == undefined || request == "") request = {};
 
     request.currUserId = localStorage.getItem("UserId");
+    request.UserRole = localStorage.getItem("RoleId");
+    request.currEmail = localStorage.getItem("Email");
 
     const httpPackage = request;
 
@@ -64,6 +68,8 @@ export class ServiceInvoker {
     if (request == undefined || request == "") request = {};
 
     request.currUserId = localStorage.getItem("UserId");
+    request.UserRole = localStorage.getItem("RoleId");
+    request.currEmail = localStorage.getItem("Email");
 
     const httpPackage = {
       headers: this.getAuthHeaders(),

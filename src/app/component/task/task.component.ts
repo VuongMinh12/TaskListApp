@@ -1,4 +1,4 @@
-import { OnInit, Component, ViewChild } from '@angular/core';
+import { OnInit, Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { RouterOutlet } from '@angular/router';
@@ -12,7 +12,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { RouterModule, Router } from '@angular/router';
 import { UserService } from '../../service/user.service';
-import { IDropdownSettings, NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import {
+  IDropdownSettings,
+  NgMultiSelectDropDownModule,
+} from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'app-task',
@@ -36,8 +39,6 @@ import { IDropdownSettings, NgMultiSelectDropDownModule } from 'ng-multiselect-d
   styleUrl: './task.component.css',
 })
 export class TaskComponent implements OnInit {
-
-
   displayedColumns: string[] = [
     'No',
     'Title',
@@ -69,9 +70,11 @@ export class TaskComponent implements OnInit {
   editEndDate: string = '';
 
   userList: { [key: number]: string } = {};
-  assigneeList: { [key: number]: { item_id: number; item_text: string }[] } ={};
+  assigneeList: { [key: number]: { item_id: number; item_text: string }[] } =
+    {};
   dropdownList: { item_id: number; item_text: string }[] = [];
-  selectedItems: { [key: number]: { item_id: number; item_text: string }[] } ={};
+  selectedItems: { [key: number]: { item_id: number; item_text: string }[] } =
+    {};
 
   constructor(
     private service: TaskService,
@@ -81,12 +84,11 @@ export class TaskComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
-  ngOnInit() {
-    this.initializeDropdownSettings();
-    this.loadStatus();
-    this.loadAllTask();
+  ngOnInit() : void {
     this.loadUser();
-    this.loadTaskUser();
+    this.loadAllTask();
+    this.loadStatus();
+    this.initializeDropdownSettings();
   }
 
   clearStatus() {
@@ -114,6 +116,7 @@ export class TaskComponent implements OnInit {
         this.dataSource = new MatTableDataSource(data);
         this.tasklist = data;
         this.dataSource.paginator = this.paginator;
+        this.loadTaskUser();
       },
       (error) => {
         console.log(error);
@@ -138,9 +141,18 @@ export class TaskComponent implements OnInit {
     );
   }
 
+  //updaet = 1; add = 2
   OnSave() {
     this.updateModel.CreateDate = new Date(this.editCreateDate);
     this.updateModel.FinishDate = new Date(this.editEndDate);
+    this.updateModel.listUser = [];
+    if (this.CurrentAssigneeList != null ){
+      this.CurrentAssigneeList.forEach((u) => {
+        this.updateModel.listUser.push(u.item_id);
+      });
+    }else {
+      this.updateModel.listUser = [];
+    }
     var request = {
       task: this.updateModel,
     };
@@ -190,6 +202,7 @@ export class TaskComponent implements OnInit {
     return temp;
   }
 
+  CurrentAssigneeList: any[] = [];
   //1 edit, 2 create
   OpenEditAddTask(element: any, type: number) {
     this.editOrAdd = type;
@@ -203,6 +216,8 @@ export class TaskComponent implements OnInit {
       this.updateModel.FinishDate,
       'yyyy-MM-dd'
     );
+    this.CurrentAssigneeList = this.assigneeList[element.taskId];
+
     if (modalAdd != null) {
       modalAdd.style.display = 'block';
     }
@@ -221,7 +236,6 @@ export class TaskComponent implements OnInit {
         id: id,
       };
       this.service.DeleteTask(request).subscribe((reponse) => {
-        console.log(id);
         if (reponse.status == 1) {
           this.loadAllTask();
           reponse.message;
@@ -256,9 +270,10 @@ export class TaskComponent implements OnInit {
   }
 
   loadTaskUser() {
+    this.assigneeList = []
     let request = {};
-    this.userService.GetUserTask(request).subscribe((response: any[]) => {
-      response.forEach((a) => {
+    this.userService.GetUserTask(request).subscribe((response: any) => {
+      response.usersTask.forEach((a: { taskId: number; userId: number; }) => {
         this.assigneeList[a.taskId] = this.assigneeList[a.taskId] ?? [];
 
         var temp: { item_id: number; item_text: string } = {
@@ -275,8 +290,6 @@ export class TaskComponent implements OnInit {
     });
   }
 
-
-
   dropdownSettings: IDropdownSettings = {};
   initializeDropdownSettings(): void {
     this.dropdownSettings = {
@@ -286,8 +299,11 @@ export class TaskComponent implements OnInit {
       selectAllText: 'Select All',
       unSelectAllText: 'Unselect All',
       itemsShowLimit: 10,
-      allowSearchFilter: true
+      allowSearchFilter: true,
     };
   }
 
+  onItemSelect(item: any, taskId: number) {
+    console.log('taskList\n', this.assigneeList);
+  }
 }

@@ -53,14 +53,11 @@ table {
   width: 68%;
 
 }
-::ng-deep .multiselect-dropdown span , ::ng-deep .selected-item-container *{
+::ng-deep .multiselect-dropdown span , ::ng-deep .selected-item-container {
   background-color: #ffffff !important;
   border: 1px solid #ffffff !important;
-  color : black;
+  color : #212529 !important;
   width: 70%;
-}
-::ng-deep .selected-item-container{
-  max-width: 100%;
 }
 
 
