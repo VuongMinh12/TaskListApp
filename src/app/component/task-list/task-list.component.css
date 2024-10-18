@@ -1,18 +1,64 @@
-table .btn{
-  margin: 2px;
+.martab{
+  padding-left: 3%;
+  padding-right: 3%;
+  padding-top: 1%;
 }
-.border{
-  padding: 10px;
+table {
+  width: 100%;
+
 }
-.btn{
-  margin-right: 10px;
-}
-.fa {
-  margin-right: 10px;
+.modal-body div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
 }
 
-::ng-deep .multiselect-dropdown span, ::ng-deep .selected-item-container *{
-  background-color: #212529 !important;
-  border: 1px solid #212529 !important;
+.modal-body label {
+  flex: 1;
 }
+
+.modal-body input, .modal-body select, .modal-body {
+  flex: 2;
+  margin-left: 1rem;
+}
+.form-group-search{
+  width: 18%;
+}
+.clear-btn{
+  font-size: 13px;
+  text-align: right;
+  color: gray;
+  padding: 4px;
+  border-radius: 8px;
+  margin-left:90px;
+}
+.clear-btn:hover{
+  background-color: gray;
+  color: white;
+  transition-duration: 0.5s;
+}
+
+::ng-deep .table ,::ng-deep .table-dark , ::ng-deep.table-hover ::ng-deep.table-primary {
+  border: 1px solid #212529 !important;
+  text-align: center !important;
+}
+
+::ng-deep.table-primary{
+  border: 1px #212529 !important;
+  text-align: center !important;
+  padding-bottom: auto !important;
+}
+
+.dropdown-custom {
+  width: 68%;
+
+}
+::ng-deep .multiselect-dropdown span , ::ng-deep .selected-item-container {
+  background-color: #ffffff !important;
+  border: 1px solid #ffffff !important;
+  color : #212529 !important;
+  width: 70%;
+}
+
+
 

@@ -6,7 +6,7 @@ import { Task, TaskUpdateAddCreate } from '../../model/task';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TaskService } from '../../service/task.service';
-import { CommonModule, DatePipe, NgFor } from '@angular/common';
+import { CommonModule, DatePipe, NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -34,6 +34,7 @@ import {
     RouterModule,
     CommonModule,
     NgMultiSelectDropDownModule,
+    NgIf
   ],
   templateUrl: './task.component.html',
   styleUrl: './task.component.css',
@@ -84,11 +85,15 @@ export class TaskComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
+  role: number = 0;
   ngOnInit() : void {
     this.loadUser();
     this.loadAllTask();
     this.loadStatus();
     this.initializeDropdownSettings();
+    const storedRole = localStorage.getItem('RoleId');
+    this.role = storedRole ? +storedRole : 0;
+    console.log(this.role)
   }
 
   clearStatus() {
