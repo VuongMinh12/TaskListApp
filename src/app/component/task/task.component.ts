@@ -34,7 +34,8 @@ import {
     RouterModule,
     CommonModule,
     NgMultiSelectDropDownModule,
-    NgIf
+    NgIf,
+
   ],
   templateUrl: './task.component.html',
   styleUrl: './task.component.css',
@@ -57,7 +58,7 @@ export class TaskComponent implements OnInit {
   PageNumber = 1;
   PageSize = 1000;
   TitleInput: string = '';
-  StatusInput: number = 2;
+  StatusInput: number = 0;
   CreateDateInput: Date | null = null;
   EndDateInput: Date | null = null;
   UserInput: number = 0;
@@ -93,7 +94,6 @@ export class TaskComponent implements OnInit {
     this.initializeDropdownSettings();
     const storedRole = localStorage.getItem('RoleId');
     this.role = storedRole ? +storedRole : 0;
-    console.log(this.role)
   }
 
   clearStatus() {

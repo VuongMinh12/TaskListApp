@@ -10,7 +10,7 @@ export const AuthInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: 
   const router = inject(Router);
 
   return next(req).pipe(
-    catchError((error: HttpErrorResponse) => {
+    catchError((error : HttpErrorResponse) => {
       if (error.status === 401) {
         return loginService.refreshAccessToken().pipe(
           switchMap(newToken => {
@@ -25,8 +25,13 @@ export const AuthInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: 
             }
           })
         );
-      } else
-      {
+      }
+      // else if (error.status === 404)
+      // {
+      //   router.navigate(['/notfound']);
+      //   return throwError(() => error);
+      // }
+      else{
         return throwError(() => error);
       }
     })

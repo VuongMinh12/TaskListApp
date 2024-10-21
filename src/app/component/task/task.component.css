@@ -38,15 +38,11 @@ table {
   transition-duration: 0.5s;
 }
 
-::ng-deep .table ,::ng-deep .table-dark , ::ng-deep.table-hover ::ng-deep.table-primary {
-  border: 1px solid #212529 !important;
+::ng-deep .table ,::ng-deep .table-dark , ::ng-deep.table-hover , ::ng-deep.table-primary {
   text-align: center !important;
-}
-
-::ng-deep.table-primary{
-  border: 1px #212529 !important;
-  text-align: center !important;
-  padding-bottom: auto !important;
+  padding-top: 20px;
+  font-size: large;
+  background-color: none;
 }
 
 .dropdown-custom {
@@ -58,6 +54,11 @@ table {
   border: 1px solid #ffffff !important;
   color : #212529 !important;
   width: 70%;
+}
+.table-search, tr , td,th{
+  color: #212529;
+  border: 1px, solid,black;
+
 }
 
 

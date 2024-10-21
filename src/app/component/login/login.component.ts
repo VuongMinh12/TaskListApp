@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  role: number = 0;
   login() {
     if (this.inputEmail == '' || this.inputPw == '')
       alert('Vui lòng nhập đầy đủ thông tin');
@@ -38,11 +39,18 @@ export class LoginComponent implements OnInit {
         email: this.inputEmail,
         password: this.inputPw,
       };
+      const storedRole = localStorage.getItem('RoleId');
+    this.role = storedRole ? +storedRole : 0;
 
       this.service.Login(request).subscribe((response: any) => {
         if (response.status == 1) {
           this.service.setUserInfoLocalStorage(response);
-          this.router.navigate(['/taskboard']);
+          if (response.roleId > 2){
+            this.router.navigate(['/admin']);
+
+          }else{
+            this.router.navigate(['/taskboard']);
+          }
         } else {
           alert(response.message);
           this.inputEmail == "", this.inputPw == "";

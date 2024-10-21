@@ -1,0 +1,46 @@
+
+<mat-toolbar color="primary" class="example-toolbar">
+  <h1 class="example-app-name">My Task App &nbsp;</h1>
+  <i class="fa-solid fa-bars" (click)="isExpanded = !isExpanded"></i>
+
+</mat-toolbar>
+<mat-sidenav-container class="example-container" autosize>
+  <mat-sidenav #sidenav class="example-sidenav" mode="side" opened="true" (mouseenter)="mouseenter()"
+    (mouseleave)="mouseleave()">
+    <mat-nav-list>
+      <mat-list-item>
+        <a [routerLink]="['/admin/task']">
+        <span mat-list-item *ngIf="isExpanded || isShowing">Task </span>
+        <i class="fa-solid fa-list-check"></i>
+      </a>
+      </mat-list-item>
+      <mat-list-item routerLink="/user">
+        <span mat-list-item *ngIf="isExpanded || isShowing">User </span>
+        <i class="fa-regular fa-user"></i>
+      </mat-list-item>
+      <mat-list-item >
+        <a routerLink="/status">
+        <span mat-list-item  *ngIf="isExpanded || isShowing">Status </span>
+        <i class="fa-solid fa-bars-progress"></i>
+      </a>
+      </mat-list-item>
+      <mat-list-item >
+        <a routerLink="/role">
+        <span mat-list-item *ngIf="isExpanded || isShowing">Role </span>
+        <i class="fa-solid fa-lock"></i>
+      </a>
+      </mat-list-item>
+      <mat-list-item >
+        <a routerLink="/log">
+        <span mat-list-item *ngIf="isExpanded || isShowing">History Log </span>
+        <i class="fa-solid fa-clipboard-list"></i>
+      </a>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <div class="example-sidenav-content">
+    <router-outlet/>
+  </div>
+
+</mat-sidenav-container>
