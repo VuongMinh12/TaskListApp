@@ -14,12 +14,24 @@ export class UserService {
     private invoker: ServiceInvoker
   ) {}
 
-  GetAllUser(request:any){
+  GetUser(request:any){
     return this.invoker.get( request,"User/AllUser");
   }
 
   GetUserTask(request:any){
     return this.invoker.get(request,"User/UserTask");
+  }
+  GetAllUser (request:any){
+    return this.invoker.get(request,"User/GetAllUser");
+  }
+  EditUser(request : any){
+    return this.invoker.put(request, "User/UpdateUser");
+  }
+  AddUser (request : any){
+    return this.invoker.post(request,"User");
+  }
+  DeletetUser(request : any){
+    return this.invoker.put(request, "User/DeleteUser");
   }
 }
 

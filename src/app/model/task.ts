@@ -5,7 +5,6 @@ export interface Task {
   CreateDate : Date;
   FinishDate : Date;
   Estimate : number;
-  UserName : string;
 }
 
 export class TaskUpdateAddCreate {

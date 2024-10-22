@@ -1,0 +1,65 @@
+.martab{
+  padding-left: 3%;
+  padding-right: 3%;
+  padding-top: 1%;
+}
+table {
+  width: 100%;
+
+}
+.modal-body div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.modal-body label {
+  flex: 1;
+}
+
+.modal-body input, .modal-body select, .modal-body {
+  flex: 2;
+  margin-left: 1rem;
+}
+.form-group-search{
+  width: 18%;
+}
+.clear-btn{
+  font-size: 13px;
+  text-align: right;
+  color: #212529 ;
+  padding: 4px;
+  border-radius: 8px;
+  margin-left:90px;
+}
+.clear-btn:hover{
+  background-color: gray;
+  color: white;
+  transition-duration: 0.5s;
+}
+
+::ng-deep .table ,::ng-deep .table-dark , ::ng-deep.table-hover , ::ng-deep.table-primary {
+  text-align: center !important;
+  padding-top: 20px;
+  font-size: large;
+  background-color: none;
+}
+
+.dropdown-custom {
+  width: 68%;
+
+}
+::ng-deep .multiselect-dropdown span , ::ng-deep .selected-item-container {
+  background-color: #ffffff !important;
+  border: 1px solid #ffffff !important;
+  color : #212529 !important;
+  width: 70%;
+}
+.table-search, tr , td,th{
+  color: #212529;
+  border: 1px, solid,black;
+
+}
+
+
+

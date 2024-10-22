@@ -16,6 +16,7 @@ import {
   IDropdownSettings,
   NgMultiSelectDropDownModule,
 } from 'ng-multiselect-dropdown';
+import { StatusService } from '../../service/status.service';
 
 @Component({
   selector: 'app-task',
@@ -63,7 +64,6 @@ export class TaskComponent implements OnInit {
   EndDateInput: Date | null = null;
   UserInput: number = 0;
   tasklist: TaskUpdateAddCreate[] = [];
-  listTask: any[] = [];
   updateModel: TaskUpdateAddCreate = new TaskUpdateAddCreate({});
   editOrAdd: number = 1;
   statusList: any[] = [];
@@ -81,7 +81,8 @@ export class TaskComponent implements OnInit {
   constructor(
     private service: TaskService,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private statusService : StatusService,
   ) {}
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
@@ -136,7 +137,7 @@ export class TaskComponent implements OnInit {
       StatusName: '',
       IsActive: 1,
     };
-    this.service.GetStatus(request).subscribe(
+    this.statusService.GetStatus(request).subscribe(
       (response: any) => {
         this.statusList = response;
       },
@@ -179,18 +180,18 @@ export class TaskComponent implements OnInit {
           if (this.editOrAdd == 1) {
             this.service.EditTask(request).subscribe((reponse) => {
               if (reponse.status == 1) {
-                this.CloveEditAddTask();
+                this.CloseEditAddTask();
                 this.loadAllTask();
               }
               alert(reponse.message);
             });
           } else if (this.editOrAdd == 2) {
-            this.service.AddTask(request).subscribe((reponse) => {
-              if (reponse.status == 1) {
-                this.CloveEditAddTask();
+            this.service.AddTask(request).subscribe((response) => {
+              if (response.status == 1) {
+                this.CloseEditAddTask();
                 this.loadAllTask();
               }
-              alert(reponse.message);
+              alert(response.message);
             });
           }
         }
@@ -228,7 +229,7 @@ export class TaskComponent implements OnInit {
     }
   }
 
-  CloveEditAddTask() {
+  CloseEditAddTask() {
     const modalAdd = document.getElementById('ModalEdit');
     if (modalAdd != null) {
       modalAdd.style.display = 'none';
@@ -257,7 +258,7 @@ export class TaskComponent implements OnInit {
 
   loadUser() {
     let request = {};
-    this.userService.GetAllUser(request).subscribe((response) => {
+    this.userService.GetUser(request).subscribe((response) => {
       var users: any[] = response.users;
 
       this.dropdownList = users.map((user) => ({
