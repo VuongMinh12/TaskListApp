@@ -7,7 +7,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { User, UserUpdateAddCreate } from '../../model/user';
 import { RoleService } from '../../service/role.service';
 import { UserService } from '../../service/user.service';
@@ -26,7 +26,6 @@ import { UserService } from '../../service/user.service';
     MatFormFieldModule,
     MatSelectModule,
     NgFor,
-    RouterModule,
     CommonModule,
   ],
   templateUrl: './user.component.html',
@@ -35,9 +34,15 @@ import { UserService } from '../../service/user.service';
 export class UserComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
+  role: number = 0;
   ngOnInit(): void {
     this.LoadRole();
     this.LoadUser();
+    const storedRole = localStorage.getItem('RoleId');
+    this.role = storedRole ? +storedRole : 0;
+    if(this.role > 2){
+      this.displayedColumns.splice(this.displayedColumns.indexOf('Edit'), 0, 'IsActive');
+    }
   }
   constructor(
     private roleService: RoleService,
@@ -51,7 +56,6 @@ export class UserComponent implements OnInit {
     'LastName',
     'Password',
     'RoleName',
-    'IsActive',
     'Edit',
     'Delete',
   ];
@@ -94,7 +98,7 @@ export class UserComponent implements OnInit {
       firstName: this.FirstName,
       lastName: this.LastName,
       roleId: this.RoleId,
-      isActive: this.IsAcvite,
+      isActive: this.IsAcvite
     };
     this.userService.GetAllUser(request).subscribe(
       (data) => {
@@ -127,7 +131,7 @@ export class UserComponent implements OnInit {
     this.editOrAdd = type;
     const modalAdd = document.getElementById('ModalEdit');
     this.updateModel = new UserUpdateAddCreate(element);
-    this.updateModel.IsActive = 1;
+    // this.updateModel.IsActive = 1;
     if (modalAdd != null) {
       modalAdd.style.display = 'block';
     }
@@ -135,7 +139,7 @@ export class UserComponent implements OnInit {
 
   OnSave() {
     var request = {
-      user: this.updateModel,
+      user: this.updateModel
     };
     if (
       this.updateModel.Email != '' &&

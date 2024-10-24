@@ -2,13 +2,14 @@ body {
   background-color: #121212;
   color: #ffffff;
   font-family: Arial, sans-serif;
+  font-size: 18px; /* Tăng kích thước font cho body */
 }
 
 .outer {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80vh;
+  height: 100vh; /* Tăng chiều cao lên 100vh để chiếm toàn bộ chiều cao màn hình */
   width: 100%;
 }
 
@@ -16,7 +17,8 @@ body {
   background-color: #1e1e1e;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-  padding: 30px;
+  width: 500px; /* Tăng chiều rộng panel */
+  padding: 40px; /* Tăng padding để tạo khoảng cách bên trong */
 }
 
 .panel-heading {
@@ -24,28 +26,45 @@ body {
 }
 
 .panel-heading h3 {
-  color: #ffffff;
+  color: #ffffff; /* Đặt màu chữ của tiêu đề thành trắng */
+  font-size: 26px; /* Tăng kích thước chữ cho tiêu đề */
 }
 
 .input-field {
   position: relative;
-  margin-bottom: 10px;
+  margin-bottom: 25px; /* Tăng khoảng cách giữa các input */
+  padding: 5px; /* Tăng padding cho input */
+  font-size: 18px;
 }
 
 .input-field input {
   width: 100%;
-  padding: 10px;
+  padding: 15px; /* Tăng padding cho input */
   background-color: #333;
   color: #ffffff;
   border: none;
   border-radius: 5px;
-  box-sizing: border-box;
+  box-sizing: border-box; /* Đảm bảo padding không làm thay đổi kích thước */
+  font-size: 16px; /* Tăng kích thước chữ cho input */
+}
+
+.input-field button {
+  position: absolute;
+  right: 10px; /* Đặt vị trí nút */
+  top: 50%; /* Đặt nút ở giữa chiều dọc */
+  transform: translateY(-50%); /* Căn giữa chính xác */
+  background: none;
+  border: none;
+  color: #ffffff;
+  padding: 0; /* Loại bỏ padding */
+  cursor: pointer;
+  height: 30px; /* Đặt chiều cao của nút, có thể điều chỉnh */
+  line-height: 1; /* Đảm bảo không có khoảng cách thừa */
 }
 
 .btn-primary {
   background-color: #6200ea;
   color: #ffffff;
-  margin-top: 20px; /* Khoảng cách trên nút Signup */
 }
 
 .btn-primary:hover {
@@ -53,26 +72,15 @@ body {
 }
 
 .text-muted {
-  color: #ffffff !important;
-  text-align: center;
+  color: #ffffff !important; /* Đặt màu chữ thành trắng với !important */
+  text-align: center; /* Căn giữa nếu cần */
 }
 
 .text-muted a {
-  color: #6200ea; /* Màu cho liên kết */
-  text-decoration: none; /* Không có gạch chân */
+  color: #ffffff !important; /* Đặt màu chữ của liên kết thành trắng với !important */
+  font-size: 16px;
 }
 
-.btn-link {
-  color: #6200ea; /* Màu cho nút Login */
-  text-decoration: none; /* Loại bỏ gạch chân */
-}
-.form-inline {
-  display: flex;
-  justify-content: flex-end; /* Căn chỉnh các phần tử bên phải */
-}
-
-a#forgot {
-  color: #6200ea; /* Màu chữ cho liên kết */
-  text-decoration: none; /* Không có gạch chân */
-  margin-left: auto; /* Tạo khoảng cách tự động để đẩy sang bên phải */
+.text-muted a:hover {
+  text-decoration: underline;
 }

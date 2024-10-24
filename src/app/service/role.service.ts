@@ -15,4 +15,13 @@ export class RoleService {
   GetRole(request: any){
     return this.invoker.get(request, "Role");
   }
+  AddRole(request:any){
+    return this.invoker.post(request,"Role");
+  }
+  EditRole(request: any){
+    return this.invoker.put(request,"Role");
+  }
+  DeleteRole(request:any){
+    return this.invoker.delete(request,"Role");
+  }
 }
