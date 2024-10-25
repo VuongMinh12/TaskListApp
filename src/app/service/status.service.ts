@@ -19,9 +19,9 @@ export class StatusService {
     return this.invoker.post(request,"Status");
   }
   EditStatus(request: any){
-    return this.invoker.put(request,"Status");
+    return this.invoker.put(request,"Status/UpdateStatus");
   }
   DeleteStatus(request:any){
-    return this.invoker.delete(request,"Status");
+    return this.invoker.put(request,"Status/DeleteStatus");
   }
 }

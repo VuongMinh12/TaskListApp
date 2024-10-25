@@ -1,91 +1,81 @@
-<div class="martab table-hover">
-  <mat-toolbar color="primary">
-    <span>Task Management </span>
-    <button type="button" class="btn btn-success " (click)="OpenEditAddTask({}, 2)"
-      style="margin-right:0px; margin-left: auto;"><i class="fa-solid fa-plus"></i>Add</button>
-  </mat-toolbar>
-  <table class="table-search">
-    <tr>
-      <th>
-        Search Title
-      </th>
-      <th>
-        Search Status <b class="clear-btn" (click)="clearStatus()">X</b>
-      </th>
-      <th>
-        Search Create Date
-      </th>
-      <th>
-        Search Finish Date
-      </th>
-    </tr>
-    <tr>
-      <td>
-        <input type="text" class="form-control" [(ngModel)]="TitleInput" (keyup)="loadAllTask()">
-      </td>
-      <td>
-        <select class="form-control" [(ngModel)]="StatusInput" (change)="loadAllTask()">
+<div class="task-container">
+  <div class="task-header">
+    <div class="header-title">
+      <b class="task-title">Task Management</b>
+    </div>
+    <button type="button" class="btn btn-success add-button" (click)="OpenEditAddTask({}, 2)">
+      <i class="fa-solid fa-plus"></i> Add
+    </button>
+  </div>
 
-          <option *ngFor="let status of statusList" [value]="status.statusId">
-            {{status.statusName}}
-          </option>
-        </select>
-      </td>
-      <td>
-        <input type="date" class="form-control" [(ngModel)]="CreateDateInput" (change)="loadAllTask()">
-      </td>
-      <td>
-        <input type="date" class="form-control" [(ngModel)]="EndDateInput" (change)="loadAllTask()">
-      </td>
-  </table>
+  <div class="table-search">
+    <div class="col-3">
+      <label>Title</label>
+      <input type="text" class="form-control" [(ngModel)]="TitleInput" (keyup)="loadAllTask()">
+    </div>
+    <div class="col-3">
+      <label>Status <b (click)="clearStatus()" class="button-clear"><i class="fa-solid fa-delete-left"></i></b></label>
+      <select class="form-control" [(ngModel)]="StatusInput" (change)="loadAllTask()">
+        <option *ngFor="let status of statusList" [value]="status.statusId">
+          {{status.statusName}}
+        </option>
+      </select>
+    </div>
+    <div class="col-3">
+      <label>Create Date</label>
+      <input class="form-control" type="date" [(ngModel)]="CreateDateInput" (change)="loadAllTask()">
+    </div>
+    <div class="col-3">
+      <label>Finish Date</label>
+      <input class="form-control" type="date" [(ngModel)]="EndDateInput" (change)="loadAllTask()">
+    </div>
+  </div>
 
-  <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" class="table">
+  <div>
+    <table mat-table [dataSource]="dataSource" class="table table-hover table-mat">
 
       <ng-container matColumnDef="No">
-        <th mat-header-cell *matHeaderCellDef class="table-primary"> No. </th>
+        <th mat-header-cell *matHeaderCellDef> No. </th>
         <td mat-cell *matCellDef="let element"> {{element.no}} </td>
       </ng-container>
 
       <ng-container matColumnDef="Title">
-        <th mat-header-cell *matHeaderCellDef class="table-primary">
+        <th mat-header-cell *matHeaderCellDef>
           <div>Title</div>
         </th>
-        <td mat-cell *matCellDef="let element" class="table-primary"> {{element.title}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.title}} </td>
       </ng-container>
 
       <ng-container matColumnDef="Status">
         <th mat-header-cell *matHeaderCellDef>
-          <div class="table-primary">
-            Status
-          </div>
-        <td mat-cell *matCellDef="let element" class="table-primary"> {{element.statusName}} </td>
+          <div> Status</div>
+        <td mat-cell *matCellDef="let element"> {{element.statusName}} </td>
       </ng-container>
 
       <ng-container matColumnDef="CreateDate">
         <th mat-header-cell *matHeaderCellDef>
-          <div class="table-primary">CreateDate</div>
+          <div>CreateDate</div>
         </th>
-        <td mat-cell *matCellDef="let element" class="table-primary"> {{getFormatedDate(element.createDate,
+        <td mat-cell *matCellDef="let element"> {{getFormatedDate(element.createDate,
           "dd/MM/yyyy")}} </td>
       </ng-container>
 
       <ng-container matColumnDef="FinishDate">
         <th mat-header-cell *matHeaderCellDef>
-          <div class="table-primary">FinishDate</div>
+          <div>FinishDate</div>
         </th>
-        <td mat-cell *matCellDef="let element" class="table-primary"> {{getFormatedDate(element.finishDate,
+        <td mat-cell *matCellDef="let element"> {{getFormatedDate(element.finishDate,
           "dd/MM/yyyy")}} </td>
       </ng-container>
 
       <ng-container matColumnDef="Estimate">
-        <th mat-header-cell *matHeaderCellDef class="table-primary"> Estimate </th>
-        <td mat-cell *matCellDef="let element" class="table-primary"> {{element.estimate}} </td>
+        <th mat-header-cell *matHeaderCellDef> Estimate </th>
+        <td mat-cell *matCellDef="let element"> {{element.estimate}} </td>
       </ng-container>
 
       <ng-container matColumnDef="Assignee">
-        <th mat-header-cell *matHeaderCellDef class="table-primary"> Assignee </th>
-        <td mat-cell *matCellDef="let element" class="table-primary">
+        <th mat-header-cell *matHeaderCellDef> Assignee </th>
+        <td mat-cell *matCellDef="let element">
           <div *ngFor="let assign of assigneeList[element.taskId]">
             {{assign.item_text }}
           </div>
@@ -93,8 +83,8 @@
       </ng-container>
 
       <ng-container matColumnDef="Edit">
-        <th mat-header-cell *matHeaderCellDef class="table-primary"> Edit </th>
-        <td mat-cell *matCellDef="let element" class="table-primary">
+        <th mat-header-cell *matHeaderCellDef> Edit </th>
+        <td mat-cell *matCellDef="let element">
           <span class="action-icon" (click)="OpenEditAddTask(element, 1)"
             *ngIf="!(role < 2 && assigneeList[element.taskId] && assigneeList[element.taskId].length > 2 ) ">
             <button class="btn btn-sm btn-warning">
@@ -104,8 +94,8 @@
       </ng-container>
 
       <ng-container matColumnDef="Delete">
-        <th mat-header-cell *matHeaderCellDef class="table-primary"> Delete </th>
-        <td mat-cell *matCellDef="let element " class="table-primary">
+        <th mat-header-cell *matHeaderCellDef> Delete </th>
+        <td mat-cell *matCellDef="let element ">
           <span class="action-icon" (click)="DeleteTask(element.taskId)"
             *ngIf="!(role < 2 && assigneeList[element.taskId] && assigneeList[element.taskId].length > 2 ) ">
             <button class="btn btn-sm btn-danger">
@@ -118,9 +108,10 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
-  <mat-paginator style="padding-bottom: 0px;" [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons
-    aria-label="Select page of periodic elements">
-  </mat-paginator>
+  <div>
+    <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons aria-label="Select page of periodic elements">
+    </mat-paginator>
+  </div>
 </div>
 
 
@@ -136,12 +127,12 @@
 
       <!-- Modal body -->
       <div class="modal-body">
-        <div class="form-group">
+        <div>
           <label>Title </label>
-          <input class="form-control" type="text" [(ngModel)]="updateModel.Title" required>
+          <input type="text" class="form-control" [(ngModel)]="updateModel.Title" required>
         </div>
 
-        <div class="form-group">
+        <div>
           <label> Status</label>
           <select class="form-control" [(ngModel)]="updateModel.StatusId" required>
             <option *ngFor="let status of statusList" [value]="status.statusId">
@@ -150,25 +141,26 @@
           </select>
         </div>
 
-        <div class="form-group">
+        <div>
           <label> Create Date</label>
           <input type="date" class="form-control" [(ngModel)]="editCreateDate" required>
         </div>
 
-        <div class="form-group">
+        <div>
           <label> Finish Date</label>
           <input type="date" class="form-control" [(ngModel)]="editEndDate" required>
         </div>
 
-        <div class="form-group">
+        <div>
           <label> Estimate</label>
-          <input class="form-control" type="number" [(ngModel)]="updateModel.Estimate" required>
+          <input type="number" class="form-control" [(ngModel)]="updateModel.Estimate" required>
         </div>
 
-        <div class="form-group" *ngIf="role > 1">
+        <div *ngIf="role > 1">
           <label> Assignee</label>
-          <ng-multiselect-dropdown [placeholder]="'Select Users'" [settings]="dropdownSettings" [data]="dropdownList"
-            [(ngModel)]="CurrentAssigneeList" class="form-control dropdown-custom">
+          <ng-multiselect-dropdown class="form-control" style="white-space: normal;" [placeholder]="'Select Users'"
+            [settings]="dropdownSettings" [data]="dropdownList " [(ngModel)]="CurrentAssigneeList"
+            class="form-control dropdown-custom">
           </ng-multiselect-dropdown>
         </div>
 
@@ -178,7 +170,7 @@
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
             (click)="CloseEditAddTask()">Close</button>
         </div>
-
       </div>
     </div>
   </div>
+  <div>

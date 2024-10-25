@@ -1,48 +1,48 @@
-<mat-toolbar color="primary" *ngIf="isTokenValid()">
-  <h1 >My Task App &nbsp; </h1>
-  <i class="fa-solid fa-bars" (click)="isExpanded = !isExpanded" ></i>
-
+<mat-toolbar *ngIf="isTokenValid()">
+  <h1 >My Task App</h1>
+  <span style="margin-right: 0px; margin-left: auto;">Xin chào {{nameEmail}}</span>
 </mat-toolbar>
-<mat-sidenav-container  > <!--autosize-->
-  <mat-sidenav #sidenav  mode="side" opened="true" (mouseenter)="mouseenter()"
-    (mouseleave)="mouseleave()"  *ngIf="isTokenValid()">
+
+<mat-sidenav-container autosize>
+  <mat-sidenav #sidenav  mode="side" opened="true"
+     *ngIf="isTokenValid()">
     <mat-nav-list>
       <mat-list-item>
         <a class="no-underline" [routerLink]="['/taskboard']" >
-          <span mat-list-item *ngIf="isExpanded || isShowing">Task  &nbsp;</span>
+          <span mat-list-item >Task  &nbsp;</span>
           <i class="fa-solid fa-list-check"></i>
         </a>
       </mat-list-item>
 
       <mat-list-item *ngIf="role > 1">
         <a class="no-underline" [routerLink]="['/user']">
-          <span mat-list-item *ngIf="isExpanded || isShowing">User  &nbsp;</span>
+          <span mat-list-item>User  &nbsp;</span>
           <i class="fa-regular fa-user"></i>
         </a>
       </mat-list-item>
       <mat-list-item *ngIf="role > 2">
         <a class="no-underline" [routerLink]="['/status']">
-          <span mat-list-item *ngIf="isExpanded || isShowing">Status  &nbsp;</span>
+          <span mat-list-item>Status  &nbsp;</span>
           <i class="fa-solid fa-bars-progress"></i>
         </a>
       </mat-list-item>
       <mat-list-item *ngIf="role > 2">
         <a class="no-underline" [routerLink]="['/role']">
-          <span mat-list-item *ngIf="isExpanded || isShowing">Role  &nbsp;</span>
+          <span mat-list-item >Role  &nbsp;</span>
           <i class="fa-solid fa-lock"></i>
         </a>
       </mat-list-item>
       <mat-list-item  (click)="Logout()">
         <a class="no-underline" [routerLink]="['/login']">
-          <span mat-list-item *ngIf="isExpanded || isShowing">Logout  &nbsp;</span>
+          <span mat-list-item >Logout  &nbsp;</span>
           <i class="fa-solid fa-right-from-bracket"></i>
         </a>
       </mat-list-item>
     </mat-nav-list>
   </mat-sidenav>
 
-  <div >
-    <router-outlet />
+  <div>
+    <router-outlet ></router-outlet>
   </div>
 
 </mat-sidenav-container>

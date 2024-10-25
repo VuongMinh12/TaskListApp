@@ -251,11 +251,6 @@ export class TaskComponent implements OnInit {
     }
   }
 
-  Logout() {
-    localStorage.clear();
-    this.router.navigate(['/login']);
-  }
-
   loadUser() {
     let request = {};
     this.userService.GetUser(request).subscribe((response) => {
@@ -302,14 +297,10 @@ export class TaskComponent implements OnInit {
       singleSelection: false,
       idField: 'item_id',
       textField: 'item_text',
-      selectAllText: 'Select All',
-      unSelectAllText: 'Unselect All',
-      itemsShowLimit: 10,
+      itemsShowLimit: 3,
       allowSearchFilter: true,
+      maxHeight: 100
     };
   }
 
-  onItemSelect(item: any, taskId: number) {
-    console.log('taskList\n', this.assigneeList);
-  }
 }

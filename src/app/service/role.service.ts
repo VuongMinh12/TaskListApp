@@ -19,9 +19,9 @@ export class RoleService {
     return this.invoker.post(request,"Role");
   }
   EditRole(request: any){
-    return this.invoker.put(request,"Role");
+    return this.invoker.put(request,"Role/UpdateRole");
   }
   DeleteRole(request:any){
-    return this.invoker.delete(request,"Role");
+    return this.invoker.put(request,"Role/DeleteRole");
   }
 }

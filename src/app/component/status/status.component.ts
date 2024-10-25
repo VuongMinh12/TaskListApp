@@ -51,6 +51,8 @@ export class StatusComponent implements OnInit {
 
   PageNumber = 1;
   PageSize = 20;
+  StatusName = "";
+  IsActive = -1;
   statusList: [] = [];
   updateModel: StatusUpdateAddCreate = new StatusUpdateAddCreate({});
 
@@ -58,8 +60,8 @@ export class StatusComponent implements OnInit {
     var request = {
       PageNumber: this.PageNumber,
       PageSize: this.PageSize,
-      StatusName: '',
-      IsActive: 1,
+      StatusName: this.StatusName,
+      IsActive: this.IsActive,
     };
     this.statusService.GetStatus(request).subscribe(
       (data) => {

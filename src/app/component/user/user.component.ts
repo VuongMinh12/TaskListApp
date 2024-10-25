@@ -54,7 +54,6 @@ export class UserComponent implements OnInit {
     'Email',
     'FirstName',
     'LastName',
-    'Password',
     'RoleName',
     'Edit',
     'Delete',
@@ -94,7 +93,7 @@ export class UserComponent implements OnInit {
     var request = {
       pageNumber: this.PageNumber,
       pageSize: this.PageSize,
-      email: this.Email,
+      email: this.Email.toLowerCase(),
       firstName: this.FirstName,
       lastName: this.LastName,
       roleId: this.RoleId,
@@ -131,7 +130,6 @@ export class UserComponent implements OnInit {
     this.editOrAdd = type;
     const modalAdd = document.getElementById('ModalEdit');
     this.updateModel = new UserUpdateAddCreate(element);
-    // this.updateModel.IsActive = 1;
     if (modalAdd != null) {
       modalAdd.style.display = 'block';
     }
@@ -183,5 +181,9 @@ export class UserComponent implements OnInit {
         alert(reponse.message);
       });
     }
+  }
+  clearRole(){
+    this.RoleId = 0;
+    this.LoadUser();
   }
 }

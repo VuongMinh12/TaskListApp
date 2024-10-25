@@ -4,7 +4,6 @@ export interface User {
   Email : string;
   FirstName : string;
   LastName : string;
-  Password : string;
   RoleName : string;
   IsActive : boolean;
 }
@@ -25,5 +24,6 @@ export class UserUpdateAddCreate {
     this.Password = temp.password;
     this.RoleId = temp.roleId;
     this.IsActive = temp.isActive;
+
   }
 }

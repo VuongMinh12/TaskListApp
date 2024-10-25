@@ -36,7 +36,7 @@ export class RoleComponent implements OnInit {
 
   displayedColumns: string[] = [
     'No',
-    'StatusName',
+    'RoleName',
     'IsActive',
     'Edit',
     'Delete',
@@ -48,6 +48,8 @@ export class RoleComponent implements OnInit {
 
   PageNumber = 1;
   PageSize = 20;
+  RoleName = "";
+  IsActive = -1;
   roleList: [] = [];
   updateModel: RoleUpdateAddCreate = new RoleUpdateAddCreate({});
 
@@ -60,8 +62,8 @@ export class RoleComponent implements OnInit {
     var request = {
       PageNumber: this.PageNumber,
       PageSize: this.PageSize,
-      StatusName: '',
-      IsActive: 1,
+      RoleName: this.RoleName,
+      IsActive: this.IsActive,
     };
     this.roleService.GetRole(request).subscribe(
       (data) => {
@@ -94,8 +96,9 @@ export class RoleComponent implements OnInit {
 
   OnSave() {
     var request = {
-      status: this.updateModel,
+      role: this.updateModel,
     };
+    console.log(this.updateModel.IsActive)
     if (this.updateModel.RoleName != '') {
       if (this.editOrAdd == 1) {
         this.roleService.EditRole(request).subscribe((response) => {

@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
 
   token: string | null = localStorage.getItem('AccessToken');
   role: number = 0;
-
+  nameEmail : string | null = null;
   ngOnInit(): void {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
@@ -44,6 +44,8 @@ export class AppComponent implements OnInit {
         const storedRole = localStorage.getItem('RoleId');
         this.role = storedRole ? +storedRole : 0;
         let token = localStorage.getItem('AccessToken');
+        let name = localStorage.getItem('Email');
+        this.nameEmail = name;
         if (!token) {
           this.router.navigate(['/login']);
         }
@@ -61,17 +63,6 @@ export class AppComponent implements OnInit {
   isShowing = false;
   showSubSubMenu: boolean = false;
 
-  mouseenter() {
-    if (!this.isExpanded) {
-      this.isShowing = true;
-    }
-  }
-
-  mouseleave() {
-    if (!this.isExpanded) {
-      this.isShowing = false;
-    }
-  }
   Logout() {
     localStorage.clear();
     this.router.navigate(['/login']);
