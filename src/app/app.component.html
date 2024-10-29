@@ -2,7 +2,6 @@
   <h1 >My Task App</h1>
   <span style="margin-right: 0px; margin-left: auto;">Xin chào {{nameEmail}}</span>
 </mat-toolbar>
-
 <mat-sidenav-container autosize>
   <mat-sidenav #sidenav  mode="side" opened="true"
      *ngIf="isTokenValid()">
@@ -13,7 +12,6 @@
           <i class="fa-solid fa-list-check"></i>
         </a>
       </mat-list-item>
-
       <mat-list-item *ngIf="role > 1">
         <a class="no-underline" [routerLink]="['/user']">
           <span mat-list-item>User  &nbsp;</span>
@@ -42,6 +40,7 @@
   </mat-sidenav>
 
   <div>
+    <app-toast></app-toast>
     <router-outlet ></router-outlet>
   </div>
 

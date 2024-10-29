@@ -17,6 +17,8 @@ import {
   NgMultiSelectDropDownModule,
 } from 'ng-multiselect-dropdown';
 import { StatusService } from '../../service/status.service';
+import { ToastService } from '../../service/toast.service';
+import { NONE_TYPE } from '@angular/compiler';
 
 @Component({
   selector: 'app-task',
@@ -36,7 +38,6 @@ import { StatusService } from '../../service/status.service';
     CommonModule,
     NgMultiSelectDropDownModule,
     NgIf,
-
   ],
   templateUrl: './task.component.html',
   styleUrl: './task.component.css',
@@ -82,13 +83,14 @@ export class TaskComponent implements OnInit {
     private service: TaskService,
     private router: Router,
     private userService: UserService,
-    private statusService : StatusService,
+    private statusService: StatusService,
+    private toastService: ToastService
   ) {}
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
   role: number = 0;
-  ngOnInit() : void {
+  ngOnInit(): void {
     this.loadUser();
     this.loadAllTask();
     this.loadStatus();
@@ -152,11 +154,11 @@ export class TaskComponent implements OnInit {
     this.updateModel.CreateDate = new Date(this.editCreateDate);
     this.updateModel.FinishDate = new Date(this.editEndDate);
     this.updateModel.listUser = [];
-    if (this.CurrentAssigneeList != null ){
+    if (this.CurrentAssigneeList != null) {
       this.CurrentAssigneeList.forEach((u) => {
         this.updateModel.listUser.push(u.item_id);
       });
-    }else {
+    } else {
       this.updateModel.listUser = [];
     }
     var request = {
@@ -178,20 +180,22 @@ export class TaskComponent implements OnInit {
           alert('Estimate phải lớn hơn 0');
         } else {
           if (this.editOrAdd == 1) {
-            this.service.EditTask(request).subscribe((reponse) => {
-              if (reponse.status == 1) {
+            this.service.EditTask(request).subscribe((response) => {
+              if (response.status == 1) {
                 this.CloseEditAddTask();
                 this.loadAllTask();
+                this.toastService.show(response.message, response.status);
               }
-              alert(reponse.message);
+              this.toastService.show(response.message, response.status);
             });
           } else if (this.editOrAdd == 2) {
             this.service.AddTask(request).subscribe((response) => {
               if (response.status == 1) {
                 this.CloseEditAddTask();
                 this.loadAllTask();
+                this.toastService.show(response.message, response.status);
               }
-              alert(response.message);
+              this.toastService.show(response.message, response.status);
             });
           }
         }
@@ -236,21 +240,6 @@ export class TaskComponent implements OnInit {
     }
   }
 
-  DeleteTask(id: any) {
-    if (confirm('Bạn có chắc chắn muốn xóa task này?')) {
-      var request = {
-        id: id,
-      };
-      this.service.DeleteTask(request).subscribe((reponse) => {
-        if (reponse.status == 1) {
-          this.loadAllTask();
-          reponse.message;
-        }
-        alert(reponse.message);
-      });
-    }
-  }
-
   loadUser() {
     let request = {};
     this.userService.GetUser(request).subscribe((response) => {
@@ -271,10 +260,10 @@ export class TaskComponent implements OnInit {
   }
 
   loadTaskUser() {
-    this.assigneeList = []
+    this.assigneeList = [];
     let request = {};
     this.userService.GetUserTask(request).subscribe((response: any) => {
-      response.usersTask.forEach((a: { taskId: number; userId: number; }) => {
+      response.usersTask.forEach((a: { taskId: number; userId: number }) => {
         this.assigneeList[a.taskId] = this.assigneeList[a.taskId] ?? [];
 
         var temp: { item_id: number; item_text: string } = {
@@ -299,8 +288,38 @@ export class TaskComponent implements OnInit {
       textField: 'item_text',
       itemsShowLimit: 3,
       allowSearchFilter: true,
-      maxHeight: 100
+      maxHeight: 120,
     };
   }
 
+  onCancel() {
+    const modalDelete = document.getElementById('ModalDelete');
+    if (modalDelete != null) {
+      modalDelete.style.display = 'none';
+    }
+  }
+
+  DeleteTask(element: number) {
+    const modalDelete = document.getElementById('ModalDelete');
+    if (modalDelete != null) {
+      modalDelete.style.display = 'block';
+    }
+    this.updateModel = new TaskUpdateAddCreate(element);
+    this.updateModel.TaskId = element;
+    console.log(element)
+  }
+
+  onConfirm() {
+    var request = {
+      id: this.updateModel.TaskId,
+    };
+    this.service.DeleteTask(request).subscribe((response) => {
+      if (response.status == 1) {
+        this.loadAllTask();
+        this.toastService.show(response.message, response.status);
+        this.onCancel();
+      }
+      this.toastService.show(response.message, response.status);
+    });
+  }
 }

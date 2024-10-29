@@ -1,4 +1,5 @@
 <div class="task-container">
+  <!-- Header-->
   <div class="task-header">
     <div class="header-title">
       <b class="task-title">Task Management</b>
@@ -8,6 +9,7 @@
     </button>
   </div>
 
+  <!-- Search-->
   <div class="table-search">
     <div class="col-3">
       <label>Title</label>
@@ -31,6 +33,7 @@
     </div>
   </div>
 
+  <!-- Mat-table -->
   <div>
     <table mat-table [dataSource]="dataSource" class="table table-hover table-mat">
 
@@ -108,16 +111,15 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
-  <div>
-    <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons aria-label="Select page of periodic elements">
-    </mat-paginator>
-  </div>
+  <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons aria-label="Select page of periodic elements">
+  </mat-paginator>
+
 </div>
 
 
-<!-- Modal -->
+<!-- Modal Add Update -->
 <div class="modal" id="ModalEdit">
-  <div class="modal-dialog modal-dialog-centered  ">
+  <div class="modal-dialog modal-dialog-centered ">
     <div class="modal-content">
       <!-- Modal Header -->
       <div class="modal-header">
@@ -151,11 +153,6 @@
           <input type="date" class="form-control" [(ngModel)]="editEndDate" required>
         </div>
 
-        <div>
-          <label> Estimate</label>
-          <input type="number" class="form-control" [(ngModel)]="updateModel.Estimate" required>
-        </div>
-
         <div *ngIf="role > 1">
           <label> Assignee</label>
           <ng-multiselect-dropdown class="form-control" style="white-space: normal;" [placeholder]="'Select Users'"
@@ -164,6 +161,10 @@
           </ng-multiselect-dropdown>
         </div>
 
+        <div>
+          <label> Estimate</label>
+          <input type="number" class="form-control" [(ngModel)]="updateModel.Estimate" required>
+        </div>
         <!-- Modal footer -->
         <div class="modal-footer">
           <button class="btn btn-success" (click)="OnSave()">Save</button>
@@ -173,4 +174,26 @@
       </div>
     </div>
   </div>
-  <div>
+</div>
+
+<!-- Modal Delete -->
+<div>
+  <div class="modal" id="ModalDelete">
+    <div class="modal-dialog modal-dialog-top ">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Delete Task</h4>
+          <button type="button" class="btn-close" (click)="onCancel()"></button>
+        </div>
+        <div class="modal-body">
+          <p>Bạn có chắc chắn muốn xóa task này? </p>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-success" (click)="onConfirm()">Xóa</button>
+          <button type="button" class="btn btn-danger" (click)="onCancel()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

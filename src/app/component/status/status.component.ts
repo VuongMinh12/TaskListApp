@@ -10,6 +10,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { StatusService } from '../../service/status.service';
 import { Status, StatusUpdateAddCreate } from '../../model/status';
+import { ToastService } from '../../service/toast.service';
 
 @Component({
   selector: 'app-status',
@@ -45,7 +46,7 @@ export class StatusComponent implements OnInit {
     'Delete',
   ];
 
-  constructor(private statusService: StatusService) {}
+  constructor(private statusService: StatusService, private toastService : ToastService) {}
 
   dataSource: MatTableDataSource<Status> = new MatTableDataSource();
 
@@ -102,16 +103,18 @@ export class StatusComponent implements OnInit {
           if (response.status == 1) {
             this.CloseEditAddStatus();
             this.loadStatus();
+            this.toastService.show(response.message,response.status);
           }
-          alert(response.message);
+          this.toastService.show(response.message,response.status);
         });
       } else if (this.editOrAdd == 2) {
         this.statusService.AddStatus(request).subscribe((response) => {
           if (response.status == 1) {
             this.CloseEditAddStatus();
             this.loadStatus();
+            this.toastService.show(response.message,response.status);
           }
-          alert(response.message);
+          this.toastService.show(response.message,response.status);
         });
       }
     } else {
@@ -124,12 +127,12 @@ export class StatusComponent implements OnInit {
       var request = {
         id: id,
       };
-      this.statusService.DeleteStatus(request).subscribe((reponse) => {
-        if (reponse.status == 1) {
+      this.statusService.DeleteStatus(request).subscribe((response) => {
+        if (response.status == 1) {
           this.loadStatus();
-          reponse.message;
+          this.toastService.show(response.message,response.status);
         }
-        alert(reponse.message);
+        this.toastService.show(response.message,response.status);
       });
     }
   }

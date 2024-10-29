@@ -8,18 +8,19 @@ import { AppComponent } from './app.component';
 import { UserComponent } from './component/user/user.component';
 import { StatusComponent } from './component/status/status.component';
 import { RoleComponent } from './component/role/role.component';
+import { AuthGuard } from './service/auth.guard';
 
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'home', component: AppComponent },
+  { path: 'home', component: AppComponent ,canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'forgotpassword', component: ForgotpasswordComponent },
-  {path : 'user', component : UserComponent},
-  { path: 'taskboard', component: TaskComponent },
-  { path: 'status', component: StatusComponent },
-  { path: 'role', component: RoleComponent },
+  { path : 'user', component : UserComponent ,canActivate: [AuthGuard]},
+  { path: 'taskboard', component: TaskComponent ,canActivate: [AuthGuard] },
+  { path: 'status', component: StatusComponent ,canActivate: [AuthGuard]},
+  { path: 'role', component: RoleComponent ,canActivate: [AuthGuard]},
   { path: '**', component: NotfoundComponent },
 ];
 

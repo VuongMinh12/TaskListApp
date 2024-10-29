@@ -1,0 +1,10 @@
+<div aria-live="polite" aria-atomic="true" class="position-relative">
+  <div class="toast-container position-absolute bottom-0 end-0 pt-3">
+    <div class="toast" #toastElement *ngFor="let toast of toasts">
+      <div class="toast-body" [ngClass]="toast.status">
+        <b>{{ toast.message }}</b>
+        <button type="button" class="btn-close" (click)="removeToast(toast.message)" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+</div>

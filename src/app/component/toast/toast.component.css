@@ -1,0 +1,31 @@
+.toast-container {
+  position: fixed;
+  top: 40px;
+  right: 20px;
+  z-index: 1050;
+}
+
+.toast {
+  margin-bottom: 1rem;
+  width: fit-content;
+  border: 1px solid #ddd;
+  opacity: 1 !important;
+  display: block !important;
+  transition: 0.5s;
+  z-index: 1050;
+}
+
+.button {
+  padding-left: 30px;
+  color: blue !important;
+}
+
+.toast-status-1{
+  background-color: green;
+  color: white;
+}
+
+.toast-status-2{
+  background-color: red;
+  color: white;
+}

@@ -10,6 +10,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { RoleService } from '../../service/role.service';
 import { Role, RoleUpdateAddCreate } from '../../model/role';
+import { ToastService } from '../../service/toast.service';
 
 @Component({
   selector: 'app-role',
@@ -42,7 +43,7 @@ export class RoleComponent implements OnInit {
     'Delete',
   ];
 
-  constructor(private roleService: RoleService) {}
+  constructor(private roleService: RoleService, private toastService : ToastService) {}
 
   dataSource: MatTableDataSource<Role> = new MatTableDataSource();
 
@@ -127,12 +128,12 @@ export class RoleComponent implements OnInit {
       var request = {
         id: id,
       };
-      this.roleService.DeleteRole(request).subscribe((reponse) => {
-        if (reponse.status == 1) {
+      this.roleService.DeleteRole(request).subscribe((response) => {
+        if (response.status == 1) {
           this.loadRole();
-          reponse.message;
+          this.toastService.show(response.message,response.status);
         }
-        alert(reponse.message);
+        this.toastService.show(response.message,response.status);
       });
     }
   }

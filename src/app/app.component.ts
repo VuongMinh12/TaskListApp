@@ -12,6 +12,8 @@ import {
   RouterOutlet,
 } from '@angular/router';
 import { filter } from 'rxjs';
+import { ToastService } from './service/toast.service';
+import { ToastComponent } from './component/toast/toast.component';
 
 @Component({
   selector: 'app-root',
@@ -27,28 +29,35 @@ import { filter } from 'rxjs';
     MatSidenavModule,
     CommonModule,
     RouterModule,
+    ToastComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
-  constructor(private router: Router, private cdr: ChangeDetectorRef) {}
+  @ViewChild(ToastComponent) toastComponent!: ToastComponent;
+  constructor(
+    private router: Router,
+    private cdr: ChangeDetectorRef,
+    private toastService: ToastService
+  ) {}
 
   token: string | null = localStorage.getItem('AccessToken');
   role: number = 0;
-  nameEmail : string | null = null;
+  nameEmail: string | null = null;
+
+  ngAfterViewInit() {
+    this.toastService.setToastComponent(this.toastComponent);
+  }
+
   ngOnInit(): void {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
         const storedRole = localStorage.getItem('RoleId');
         this.role = storedRole ? +storedRole : 0;
-        let token = localStorage.getItem('AccessToken');
         let name = localStorage.getItem('Email');
         this.nameEmail = name;
-        if (!token) {
-          this.router.navigate(['/login']);
-        }
       });
   }
 
@@ -65,6 +74,10 @@ export class AppComponent implements OnInit {
 
   Logout() {
     localStorage.clear();
-    this.router.navigate(['/login']);
+    this.role = 0;
+    this.nameEmail = null;
+    setTimeout(() => {
+      this.router.navigate(['/login']);
+    });
   }
 }
