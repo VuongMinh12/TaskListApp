@@ -58,20 +58,8 @@
   font-weight: bold;
 }
 
-::ng-deep .multiselect-dropdown span , ::ng-deep .selected-item-container {
-  background-color: #ffffff !important;
-  border: 1px solid #ffffff !important;
-  color : #212529 !important;
-  width: 70%;
-}
-.button-clear {
-  color: black;
-  font-weight: bold;
-  cursor: pointer;
-  padding: 0 5px;
-  transition: color 0.3s;
-}
-
-.button-clear:hover {
+.error-note {
   color: red;
+  font-size: 15.5px;
+  margin-left: 10px;
 }

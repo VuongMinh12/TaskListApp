@@ -51,13 +51,10 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/taskboard']);
         } else {
           this.toastService.show(response.message,response.status);
-          this.inputEmail == "", this.inputPw == "";
         }
       });
     }else {
-      if(this.inputEmail == '' || this.inputPw == '') {
         this.errLogin = 'Vui lòng nhập đầy đủ thông tin';
-      }
     }
 
   }

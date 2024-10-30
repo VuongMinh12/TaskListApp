@@ -87,3 +87,8 @@
 .button-clear:hover {
   color: red;
 }
+.error-note {
+  color: red;
+  font-size: 15.5px;
+  margin-left: 10px;
+}

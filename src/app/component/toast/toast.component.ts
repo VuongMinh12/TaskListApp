@@ -10,7 +10,8 @@ import { ToastService } from '../../service/toast.service';
   styleUrl: './toast.component.css'
 })
 export class ToastComponent implements OnInit {
-  toasts: { message: string, status: string}[] = [];
+  toasts: { message: string, status: string, id: number}[] = [];
+  toastId: number = 0;
 
   constructor(public toastService: ToastService , private cdr: ChangeDetectorRef) {}
 
@@ -20,11 +21,13 @@ export class ToastComponent implements OnInit {
 
   show(message: string, status: number) {
     let statusClass = "toast-status-" + status
-    this.toasts.push({ message, status : statusClass});
-    setTimeout(() => this.removeToast(message), 5000);
+    var temp = { message : message, status : statusClass, id : this.toastId };
+    this.toasts.push(temp);
+    setTimeout(() => this.removeToast(temp.id),1500);
+    this.toastId++;
   }
 
-  removeToast(message: string) {
-    this.toasts = this.toasts.filter(t => t.message !== message);
+  removeToast(id: number) {
+    this.toasts = this.toasts.filter(t => t.id != id);
   }
 }

@@ -3,6 +3,7 @@
   top: 40px;
   right: 20px;
   z-index: 1050;
+  height: fit-content;
 }
 
 .toast {
@@ -15,17 +16,22 @@
   z-index: 1050;
 }
 
-.button {
-  padding-left: 30px;
-  color: blue !important;
+.btn-close {
+  margin-left: 12px !important;
 }
 
 .toast-status-1{
-  background-color: green;
-  color: white;
+  background-color: #d4edda;
+  color: #155724;
+  padding: 10px;
+  border: 1px solid #c3e6cb;
+  border-radius: 5px;
 }
 
 .toast-status-2{
-  background-color: red;
-  color: white;
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  border: 1px solid #f5c6cb;
+  border-radius: 5px;
 }

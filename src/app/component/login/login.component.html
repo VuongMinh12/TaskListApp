@@ -12,6 +12,7 @@
                 <input type="text" placeholder="Email" (change)="validateMail()" [(ngModel)]="inputEmail" required
                   (keyup.enter)="login()">
               </div>
+              <div *ngIf="!inputEmail" class="error-note">{{ errLogin }}</div>
               <div *ngIf="errorMessage" class="error-note">{{ errorMessage }}</div>
             </div>
 
@@ -23,6 +24,7 @@
                   [attr.aria-pressed]="hide()">
                   <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
+                <div *ngIf="!inputPw" class="error-note">{{ errLogin }}</div>
               </div>
             </div>
 
@@ -30,7 +32,6 @@
               <a routerLink="/forgotpassword">Forgot password?</a>
             </div>
             <button (click)="login()" class="btn btn-primary btn-block mt-4 w-100">Login</button>
-            <div *ngIf="errLogin" class="error-note">{{ errLogin }}</div>
             <div class="text-center pt-2 text-muted">
 
               Don't have an account? <a [routerLink]="['/signup']">Sign-up</a>

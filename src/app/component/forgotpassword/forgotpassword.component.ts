@@ -65,14 +65,12 @@ export class ForgotpasswordComponent implements OnInit {
     event.stopPropagation();
   }
 
-
   errUpdate= '';
   UpdatePass(){
     if(this.inputEmail == '' || this.inputFName == '' || this.inputLName == '' || this.inputPw == '' || this.inputPwCheck == ''){
       this.errUpdate ='Vui lòng điền đầy đủ thông tin!';
     }else {
       this.errUpdate = '';
-      console.log("asvasvasvasvasvasvasv")
       if (this.inputPw !== this.inputPwCheck) {
         this.errPassword = 'Mật khẩu không khớp!';
       }
@@ -85,7 +83,6 @@ export class ForgotpasswordComponent implements OnInit {
       };
 
       this.service.Forgotpass(request).subscribe((response: any) => {
-        console.log(request)
         if (response.status == 1) {
           this.router.navigate(['/login']);
           this.toastService.show(response.message,response.status);

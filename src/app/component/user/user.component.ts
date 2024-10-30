@@ -11,6 +11,7 @@ import { RouterOutlet } from '@angular/router';
 import { User, UserUpdateAddCreate } from '../../model/user';
 import { RoleService } from '../../service/role.service';
 import { UserService } from '../../service/user.service';
+import { ToastService } from '../../service/toast.service';
 
 @Component({
   selector: 'app-user',
@@ -46,7 +47,8 @@ export class UserComponent implements OnInit {
   }
   constructor(
     private roleService: RoleService,
-    private userService: UserService
+    private userService: UserService,
+    private toastService: ToastService
   ) {}
 
   displayedColumns: string[] = [
@@ -67,7 +69,7 @@ export class UserComponent implements OnInit {
   FirstName = '';
   LastName = '';
   RoleId = 0;
-  IsAcvite = 1;
+  IsActive = -1;
   userList: UserUpdateAddCreate[] = [];
   roleList: any[] = [];
   updateModel: UserUpdateAddCreate = new UserUpdateAddCreate({});
@@ -77,7 +79,7 @@ export class UserComponent implements OnInit {
       PageNumber: this.PageNumber,
       PageSize: this.PageSize,
       RoleName: '',
-      IsAcvite: 1,
+      IsActive: 1,
     };
     this.roleService.GetRole(request).subscribe(
       (response: any) => {
@@ -97,7 +99,7 @@ export class UserComponent implements OnInit {
       firstName: this.FirstName,
       lastName: this.LastName,
       roleId: this.RoleId,
-      isActive: this.IsAcvite
+      isActive: this.IsActive
     };
     this.userService.GetAllUser(request).subscribe(
       (data) => {
@@ -111,12 +113,18 @@ export class UserComponent implements OnInit {
     );
   }
 
+  errorMessage = '';
   validateMail() {
-    const emailPattern = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/;
-    if (!emailPattern.test(this.updateModel.Email)) {
-      alert('Email không hợp lệ! Hãy nhập lại email');
+    const emailPattern = /[a-zA-Z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,3}$/;
+    if (this.updateModel.Email.trim() === '') {
+      this.errorMessage = '';
+    } else if (!emailPattern.test(this.updateModel.Email)) {
+      this.errorMessage = 'Email không hợp lệ! Hãy nhập lại email';
+    } else {
+      this.errorMessage = '';
     }
   }
+
 
   CloseEditAddUser() {
     const modalAdd = document.getElementById('ModalEdit');
@@ -135,6 +143,8 @@ export class UserComponent implements OnInit {
     }
   }
 
+
+  error = '' ;
   OnSave() {
     var request = {
       user: this.updateModel
@@ -146,44 +156,70 @@ export class UserComponent implements OnInit {
       this.updateModel.Password != '' &&
       this.updateModel.RoleId != null
     ) {
+      this.error = '';
       if (this.editOrAdd == 1) {
         this.userService.EditUser(request).subscribe((response) => {
           if (response.status == 1) {
             this.CloseEditAddUser();
             this.LoadUser();
+            this.toastService.show(response.message,response.status);
           }
-          alert(response.message);
+          else {
+            this.toastService.show(response.message, response.status);
+          }
         });
       } else if (this.editOrAdd == 2) {
         this.userService.AddUser(request).subscribe((response) => {
           if (response.status == 1) {
             this.CloseEditAddUser();
             this.LoadUser();
+            this.toastService.show(response.message,response.status);
           }
-          alert(response.message);
+          else {
+            this.toastService.show(response.message, response.status);
+          }
         });
       }
     } else {
-      alert('Hay nhap va dien day du!');
+      this.error = 'Vui lòng nhập đầy đủ thông tin';
     }
   }
 
-  DeleteUser(id: any) {
-    if (confirm('Bạn có chắc chắn muốn xóa user này?')) {
-      var request = {
-        id: id,
-      };
-      this.userService.DeletetUser(request).subscribe((reponse) => {
-        if (reponse.status == 1) {
-          this.LoadUser();
-          reponse.message;
-        }
-        alert(reponse.message);
-      });
-    }
-  }
   clearRole(){
     this.RoleId = 0;
     this.LoadUser();
   }
+
+  onCancel() {
+    const modalDelete = document.getElementById('ModalDelete');
+    if (modalDelete != null) {
+      modalDelete.style.display = 'none';
+    }
+  }
+
+  DeleteUser(element: number) {
+    const modalDelete = document.getElementById('ModalDelete');
+    if (modalDelete != null) {
+      modalDelete.style.display = 'block';
+    }
+    this.updateModel = new UserUpdateAddCreate(element);
+    this.updateModel.UserId = element;
+  }
+
+  onConfirm() {
+    var request = {
+      id: this.updateModel.UserId,
+    };
+    this.userService.DeletetUser(request).subscribe((response) => {
+      if (response.status == 1) {
+        this.LoadUser();
+        this.toastService.show(response.message, response.status);
+        this.onCancel();
+      }
+      else {
+        this.toastService.show(response.message, response.status);
+      }
+    });
+  }
+
 }

@@ -42,13 +42,24 @@ export class AppComponent implements OnInit {
     private toastService: ToastService
   ) {}
 
+
+  @ViewChild('sidenav') sidenav!: MatSidenav;
+  isExpanded = false;
+  showSubmenu: boolean = false;
+  isShowing = false;
+  showSubSubMenu: boolean = false;
+
+
   token: string | null = localStorage.getItem('AccessToken');
   role: number = 0;
   nameEmail: string | null = null;
 
-  ngAfterViewInit() {
-    this.toastService.setToastComponent(this.toastComponent);
+
+  isTokenValid(): boolean {
+    const token = localStorage.getItem('AccessToken');
+    return token !== null && token.trim() !== '';
   }
+
 
   ngOnInit(): void {
     this.router.events
@@ -61,23 +72,15 @@ export class AppComponent implements OnInit {
       });
   }
 
-  isTokenValid(): boolean {
-    const token = localStorage.getItem('AccessToken');
-    return token !== null && token.trim() !== '';
+
+  ngAfterViewInit() {
+    this.toastService.setToastComponent(this.toastComponent);
   }
 
-  @ViewChild('sidenav') sidenav!: MatSidenav;
-  isExpanded = false;
-  showSubmenu: boolean = false;
-  isShowing = false;
-  showSubSubMenu: boolean = false;
-
   Logout() {
-    localStorage.clear();
     this.role = 0;
     this.nameEmail = null;
-    setTimeout(() => {
-      this.router.navigate(['/login']);
-    });
+    localStorage.clear();
+    this.router.navigate(['/login']);
   }
 }

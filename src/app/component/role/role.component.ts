@@ -77,7 +77,6 @@ export class RoleComponent implements OnInit {
       }
     );
   }
-
   CloseEditAddRole() {
     const modalAdd = document.getElementById('ModalEdit');
     if (modalAdd != null) {
@@ -95,47 +94,71 @@ export class RoleComponent implements OnInit {
     }
   }
 
+  error = '';
   OnSave() {
     var request = {
       role: this.updateModel,
     };
-    console.log(this.updateModel.IsActive)
     if (this.updateModel.RoleName != '') {
+      this.error = '';
       if (this.editOrAdd == 1) {
         this.roleService.EditRole(request).subscribe((response) => {
           if (response.status == 1) {
             this.CloseEditAddRole();
             this.loadRole();
+            this.toastService.show(response.message, response.status);
           }
-          alert(response.message);
+          else {
+            this.toastService.show(response.message, response.status);
+          }
         });
       } else if (this.editOrAdd == 2) {
         this.roleService.AddRole(request).subscribe((response) => {
           if (response.status == 1) {
             this.CloseEditAddRole();
             this.loadRole();
+            this.toastService.show(response.message, response.status);
           }
-          alert(response.message);
+          else {
+            this.toastService.show(response.message, response.status);
+          }
         });
       }
     } else {
-      alert('Hay nhap ten cua Status!');
+      this.error = 'Vui lòng nhập đầy đủ thông tin';
     }
   }
 
-  DeleteRole(id: any) {
-    if (confirm('Bạn có chắc chắn muốn xóa role này?')) {
-      var request = {
-        id: id,
-      };
-      this.roleService.DeleteRole(request).subscribe((response) => {
-        if (response.status == 1) {
-          this.loadRole();
-          this.toastService.show(response.message,response.status);
-        }
-        this.toastService.show(response.message,response.status);
-      });
+  onCancel() {
+    const modalDelete = document.getElementById('ModalDelete');
+    if (modalDelete != null) {
+      modalDelete.style.display = 'none';
     }
+  }
+
+  DeleteRole(element: number) {
+    const modalDelete = document.getElementById('ModalDelete');
+    if (modalDelete != null) {
+      modalDelete.style.display = 'block';
+    }
+    this.updateModel = new RoleUpdateAddCreate(element);
+    this.updateModel.RoleId = element;
+  }
+
+  onConfirm() {
+    var request = {
+      id: this.updateModel.RoleId,
+    };
+    this.roleService.DeleteRole(request).subscribe((response) => {
+      if (response.status == 1) {
+        this.loadRole();
+        this.toastService.show(response.message, response.status);
+        this.onCancel();
+      }
+      else {
+        this.toastService.show(response.message, response.status);
+      }
+    });
   }
 
 }

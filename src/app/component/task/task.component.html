@@ -17,7 +17,7 @@
     </div>
     <div class="col-3">
       <label>Status <b (click)="clearStatus()" class="button-clear"><i class="fa-solid fa-delete-left"></i></b></label>
-      <select class="form-control" [(ngModel)]="StatusInput" (change)="loadAllTask()">
+      <select class="form-control" [(ngModel)]="StatusInput" (change)="loadAllTask()" >
         <option *ngFor="let status of statusList" [value]="status.statusId">
           {{status.statusName}}
         </option>
@@ -131,7 +131,8 @@
       <div class="modal-body">
         <div>
           <label>Title </label>
-          <input type="text" class="form-control" [(ngModel)]="updateModel.Title" required>
+            <input type="text" class="form-control" [(ngModel)]="updateModel.Title" required>
+            <div *ngIf="!updateModel.Title" class="error-note">{{ error }}</div>
         </div>
 
         <div>
@@ -141,16 +142,19 @@
               {{status.statusName}}
             </option>
           </select>
+          <div *ngIf="!updateModel.StatusId" class="error-note">{{ error }}</div>
         </div>
 
         <div>
           <label> Create Date</label>
           <input type="date" class="form-control" [(ngModel)]="editCreateDate" required>
+          <div *ngIf="!editCreateDate" class="error-note">{{ error }}</div>
         </div>
 
         <div>
           <label> Finish Date</label>
           <input type="date" class="form-control" [(ngModel)]="editEndDate" required>
+          <div *ngIf=" !editEndDate" class="error-note">{{ error }}</div>
         </div>
 
         <div *ngIf="role > 1">
@@ -164,9 +168,11 @@
         <div>
           <label> Estimate</label>
           <input type="number" class="form-control" [(ngModel)]="updateModel.Estimate" required>
+          <div *ngIf="!updateModel.Estimate" class="error-note">{{ error }}</div>
         </div>
         <!-- Modal footer -->
         <div class="modal-footer">
+          <div *ngIf="error" class="error-note">{{ error }}</div>
           <button class="btn btn-success" (click)="OnSave()">Save</button>
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
             (click)="CloseEditAddTask()">Close</button>

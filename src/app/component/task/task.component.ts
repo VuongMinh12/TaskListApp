@@ -150,6 +150,7 @@ export class TaskComponent implements OnInit {
   }
 
   //updaet = 1; add = 2
+  error='';
   OnSave() {
     this.updateModel.CreateDate = new Date(this.editCreateDate);
     this.updateModel.FinishDate = new Date(this.editEndDate);
@@ -172,13 +173,14 @@ export class TaskComponent implements OnInit {
       this.updateModel.Estimate != null
     ) {
       if (this.updateModel.CreateDate > this.updateModel.FinishDate) {
-        alert('CreateDate không được lớn hơn FinishDate');
+        this.error = 'CreateDate không được lớn hơn FinishDate';
         this.updateModel.CreateDate.getDay();
         this.updateModel.CreateDate.getDay();
       } else {
         if (this.updateModel.Estimate <= 0) {
-          alert('Estimate phải lớn hơn 0');
+          this.error = 'Estimate phải lớn hơn 0';
         } else {
+          this.error = ''
           if (this.editOrAdd == 1) {
             this.service.EditTask(request).subscribe((response) => {
               if (response.status == 1) {
@@ -186,7 +188,9 @@ export class TaskComponent implements OnInit {
                 this.loadAllTask();
                 this.toastService.show(response.message, response.status);
               }
+              else{
               this.toastService.show(response.message, response.status);
+            }
             });
           } else if (this.editOrAdd == 2) {
             this.service.AddTask(request).subscribe((response) => {
@@ -195,13 +199,15 @@ export class TaskComponent implements OnInit {
                 this.loadAllTask();
                 this.toastService.show(response.message, response.status);
               }
-              this.toastService.show(response.message, response.status);
+              else{
+                this.toastService.show(response.message, response.status);
+              }
             });
           }
         }
       }
     } else {
-      alert('Hay nhap va dien day du!');
+      this.error = 'Vui lòng nhập đầy đủ thông tin';
     }
   }
 
@@ -306,7 +312,6 @@ export class TaskComponent implements OnInit {
     }
     this.updateModel = new TaskUpdateAddCreate(element);
     this.updateModel.TaskId = element;
-    console.log(element)
   }
 
   onConfirm() {
@@ -319,7 +324,11 @@ export class TaskComponent implements OnInit {
         this.toastService.show(response.message, response.status);
         this.onCancel();
       }
-      this.toastService.show(response.message, response.status);
+      else {
+        this.toastService.show(response.message, response.status);
+      }
+
     });
   }
+
 }

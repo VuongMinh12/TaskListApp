@@ -91,6 +91,6 @@ body {
 }
 .error-note {
   color: red;
-  margin-top: 5px;
-  text-align: center;
+  font-size: 15.5px;
+  margin-left: 10px;
 }

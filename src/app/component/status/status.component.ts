@@ -50,6 +50,8 @@ export class StatusComponent implements OnInit {
 
   dataSource: MatTableDataSource<Status> = new MatTableDataSource();
 
+  StatusInput :number = 0;
+
   PageNumber = 1;
   PageSize = 20;
   StatusName = "";
@@ -93,11 +95,14 @@ export class StatusComponent implements OnInit {
     }
   }
 
+  error = '';
+
   OnSave() {
     var request = {
       status: this.updateModel,
     };
     if (this.updateModel.StatusName != '') {
+      this.error = '';
       if (this.editOrAdd == 1) {
         this.statusService.EditStatus(request).subscribe((response) => {
           if (response.status == 1) {
@@ -105,7 +110,9 @@ export class StatusComponent implements OnInit {
             this.loadStatus();
             this.toastService.show(response.message,response.status);
           }
-          this.toastService.show(response.message,response.status);
+          else {
+            this.toastService.show(response.message, response.status);
+          }
         });
       } else if (this.editOrAdd == 2) {
         this.statusService.AddStatus(request).subscribe((response) => {
@@ -114,26 +121,45 @@ export class StatusComponent implements OnInit {
             this.loadStatus();
             this.toastService.show(response.message,response.status);
           }
-          this.toastService.show(response.message,response.status);
+          else {
+            this.toastService.show(response.message, response.status);
+          }
         });
       }
     } else {
-      alert('Hay nhap ten cua Status!');
+      this.error = 'Vui lòng nhập đầy đủ thông tin';
     }
   }
 
-  DeleteStatus(id: any) {
-    if (confirm('Bạn có chắc chắn muốn xóa status này?')) {
-      var request = {
-        id: id,
-      };
-      this.statusService.DeleteStatus(request).subscribe((response) => {
-        if (response.status == 1) {
-          this.loadStatus();
-          this.toastService.show(response.message,response.status);
-        }
-        this.toastService.show(response.message,response.status);
-      });
+  onCancel() {
+    const modalDelete = document.getElementById('ModalDelete');
+    if (modalDelete != null) {
+      modalDelete.style.display = 'none';
     }
+  }
+
+  DeleteStatus(element: number) {
+    const modalDelete = document.getElementById('ModalDelete');
+    if (modalDelete != null) {
+      modalDelete.style.display = 'block';
+    }
+    this.updateModel = new StatusUpdateAddCreate(element);
+    this.updateModel.StatusId = element;
+  }
+
+  onConfirm() {
+    var request = {
+      id: this.updateModel.StatusId,
+    };
+    this.statusService.DeleteStatus(request).subscribe((response) => {
+      if (response.status == 1) {
+        this.loadStatus();
+        this.toastService.show(response.message,response.status);
+        this.onCancel();
+      }
+      else {
+        this.toastService.show(response.message, response.status);
+      }
+    });
   }
 }

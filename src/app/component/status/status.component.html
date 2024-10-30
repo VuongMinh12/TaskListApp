@@ -13,7 +13,7 @@
       <label>Status</label>
       <input type="text" class="form-control" [(ngModel)]="StatusName" (keyup)="loadStatus()">
     </div>
-    <div class="col-4">
+    <div class="col-3">
       <label>IsActive</label>
       <select class="form-control" [(ngModel)]="IsActive" (change)="loadStatus()">
         <option [value]="-1"></option>
@@ -90,6 +90,7 @@
         <div class="form-group">
           <label>Status Name </label>
           <input class="form-control" type="text" [(ngModel)]="updateModel.StatusName" required>
+          <div *ngIf="!updateModel.StatusName" class="error-note">{{ error }}</div>
         </div>
 
         <!-- Modal footer -->
@@ -97,6 +98,28 @@
           <button class="btn btn-success" (click)="OnSave()">Save</button>
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
             (click)="CloseEditAddStatus()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Delete -->
+<div>
+  <div class="modal" id="ModalDelete">
+    <div class="modal-dialog modal-dialog-top ">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Delete Status</h4>
+          <button type="button" class="btn-close" (click)="onCancel()"></button>
+        </div>
+        <div class="modal-body">
+          <p>Bạn có chắc chắn muốn xóa status này? </p>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-success" (click)="onConfirm()">Xóa</button>
+          <button type="button" class="btn btn-danger" (click)="onCancel()">Close</button>
         </div>
       </div>
     </div>

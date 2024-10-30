@@ -12,7 +12,7 @@
       <input type="text" class="form-control" [(ngModel)]="Email" (keyup)="LoadUser()">
     </div>
 
-    <div class="col-3">
+    <div class="col-2">
       <label>Role <b (click)="clearRole()" class="button-clear"><i class="fa-solid fa-delete-left"></i></b></label>
       <select class="form-control" [(ngModel)]="RoleId" (change)="LoadUser()">
         <option *ngFor="let role of roleList" [value]="role.roleId">
@@ -30,6 +30,16 @@
       <label>Last Name</label>
       <input type="text" class="form-control" [(ngModel)]="LastName" (keyup)="LoadUser()">
     </div>
+
+    <div class="col-1" *ngIf="role > 2">
+      <label>IsActive <b (click)="clearRole()" class="button-clear"><i class="fa-solid fa-delete-left"></i></b></label>
+      <select class="form-control" [(ngModel)]="IsActive " (change)="LoadUser()">
+        <option [value]="-1"></option>
+        <option [value]="1">Active</option>
+        <option [value]="0">Deleted</option>
+      </select>
+    </div>
+
   </div>
   <div>
     <table mat-table [dataSource]="dataSource" class="table table-hover table-mat">
@@ -117,9 +127,11 @@
 
       <!-- Modal body -->
       <div class="modal-body">
-        <div class="form-group">
+        <div class="form-group" *ngIf="editOrAdd == 2">
           <label>Email </label>
           <input class="form-control" type="text" [(ngModel)]="updateModel.Email" required (change)="validateMail()">
+          <div *ngIf="errorMessage" class="error-note">{{errorMessage}}</div>
+          <div *ngIf="!updateModel.Email" class="error-note">{{ error }}</div>
         </div>
 
         <div class="form-group">
@@ -129,21 +141,25 @@
               {{role.roleName}}
             </option>
           </select>
+          <div *ngIf="!updateModel.RoleId" class="error-note">{{ error }}</div>
         </div>
 
         <div class="form-group">
           <label> First Name</label>
           <input type="text" class="form-control" [(ngModel)]="updateModel.FirstName" required>
+          <div *ngIf="!updateModel.FirstName" class="error-note">{{ error }}</div>
         </div>
 
         <div class="form-group">
           <label> Last Name</label>
           <input type="text" class="form-control" [(ngModel)]="updateModel.LastName" required>
+          <div *ngIf="!updateModel.LastName" class="error-note">{{ error }}</div>
         </div>
 
         <div class="form-group" *ngIf="this.editOrAdd == 2">
           <label> Password</label>
           <input class="form-control" type="password" [(ngModel)]="updateModel.Password" required>
+          <div *ngIf="!updateModel.Password" class="error-note">{{ error }}</div>
         </div>
 
         <!-- Modal footer -->
@@ -153,6 +169,28 @@
             (click)="CloseEditAddUser()">Close</button>
         </div>
 
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Delete -->
+<div>
+  <div class="modal" id="ModalDelete">
+    <div class="modal-dialog modal-dialog-top ">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Delete User</h4>
+          <button type="button" class="btn-close" (click)="onCancel()"></button>
+        </div>
+        <div class="modal-body">
+          <p>Bạn có chắc chắn muốn xóa user này? </p>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-success" (click)="onConfirm()">Xóa</button>
+          <button type="button" class="btn btn-danger" (click)="onCancel()">Close</button>
+        </div>
       </div>
     </div>
   </div>

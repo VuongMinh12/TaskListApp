@@ -28,7 +28,6 @@ import { MatIconModule } from '@angular/material/icon';
 export class SignupComponent implements OnInit {
 
   ngOnInit(): void {
-    console.log("Sign-up")
    }
 
   constructor(
@@ -42,15 +41,6 @@ export class SignupComponent implements OnInit {
   inputLName = "";
   inputPw = "";
   inputPwCheck = "";
-
-  clearInput(){
-    this.inputEmail = "";
-    this.inputFName = "";
-    this.inputLName != "";
-    this.inputPw = "";
-    this.inputPwCheck = "";
-
-  }
 
   hide = signal(true);
   hide2 = signal(true);
@@ -88,7 +78,6 @@ export class SignupComponent implements OnInit {
           this.toastService.show(response.message,response.status);
         } else {
           this.toastService.show(response.message,response.status);
-          this.clearInput();
         }
       });
     } else {

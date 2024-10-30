@@ -6,29 +6,29 @@
   <mat-sidenav #sidenav  mode="side" opened="true"
      *ngIf="isTokenValid()">
     <mat-nav-list>
-      <mat-list-item>
-        <a class="no-underline" [routerLink]="['/taskboard']" >
+      <mat-list-item  [routerLink]="['/taskboard']">
+        <div class="no-underline">
           <span mat-list-item >Task  &nbsp;</span>
           <i class="fa-solid fa-list-check"></i>
-        </a>
+        </div>
       </mat-list-item>
-      <mat-list-item *ngIf="role > 1">
-        <a class="no-underline" [routerLink]="['/user']">
+      <mat-list-item *ngIf="role > 1"  [routerLink]="['/user']">
+        <div class="no-underline">
           <span mat-list-item>User  &nbsp;</span>
           <i class="fa-regular fa-user"></i>
-        </a>
+        </div>
       </mat-list-item>
-      <mat-list-item *ngIf="role > 2">
-        <a class="no-underline" [routerLink]="['/status']">
+      <mat-list-item *ngIf="role > 2" [routerLink]="['/status']">
+        <div class="no-underline">
           <span mat-list-item>Status  &nbsp;</span>
           <i class="fa-solid fa-bars-progress"></i>
-        </a>
+        </div>
       </mat-list-item>
-      <mat-list-item *ngIf="role > 2">
-        <a class="no-underline" [routerLink]="['/role']">
+      <mat-list-item *ngIf="role > 2"  [routerLink]="['/role']">
+        <div class="no-underline">
           <span mat-list-item >Role  &nbsp;</span>
           <i class="fa-solid fa-lock"></i>
-        </a>
+        </div>
       </mat-list-item>
       <mat-list-item  (click)="Logout()">
         <a class="no-underline" [routerLink]="['/login']">

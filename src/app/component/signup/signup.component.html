@@ -11,12 +11,15 @@
               <input type="text" (change)="validateMail()" placeholder="Email" [(ngModel)]="inputEmail"
                 (keyup.enter)="signup()" required>
               <div *ngIf="errorMessage" class="error-note">{{ errorMessage }}</div>
+              <div *ngIf="!inputEmail" class="error-note">{{ errSignup }}</div>
             </div>
             <div class="input-field">
               <input type="text" placeholder="FirstName" [(ngModel)]="inputFName" required (keyup.enter)="signup()">
+              <div *ngIf="!inputFName" class="error-note">{{ errSignup }}</div>
             </div>
             <div class="input-field ">
               <input type="text" placeholder="LastName" [(ngModel)]="inputLName" required (keyup.enter)="signup()">
+              <div *ngIf="!inputLName" class="error-note">{{ errSignup }}</div>
             </div>
             <div class="input-field ">
               <input [type]="hide() ? 'password' : 'text'" placeholder="Password" [(ngModel)]="inputPw" required
@@ -25,6 +28,7 @@
                 [attr.aria-pressed]="hide()">
                 <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
               </button>
+              <div *ngIf="!inputPw" class="error-note">{{ errSignup }}</div>
             </div>
             <div class="input-field">
               <input [type]="hide2() ? 'password' : 'text'" placeholder="Confirm Password" [(ngModel)]="inputPwCheck" required
@@ -33,13 +37,12 @@
                   [attr.aria-pressed]="hide2()">
                   <mat-icon>{{hide2() ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
-              <div *ngIf="errPassword" class="error-note">{{ errPassword }}</div>
+              <div *ngIf="!inputPwCheck" class="error-note">{{ errSignup }}</div>
             </div>
             <div class="text-muted2">
               <a routerLink="/forgotpassword">Forgot password?</a>
             </div>
             <button (click)="signup()" class="btn btn-primary mt-4 w-100">Signup</button>
-            <div *ngIf="errSignup" class="error-note">{{ errSignup }}</div>
             <div class="text-center pt-2 text-muted">
               Already have an account? <a routerLink="/login">Login</a>
             </div>

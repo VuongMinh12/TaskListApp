@@ -26,11 +26,6 @@ export const AuthInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: 
           })
         );
       }
-      // else if (error.status === 404)
-      // {
-      //   router.navigate(['/notfound']);
-      //   return throwError(() => error);
-      // }
       else{
         return throwError(() => error);
       }

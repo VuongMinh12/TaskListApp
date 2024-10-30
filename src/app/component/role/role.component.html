@@ -13,7 +13,7 @@
       <label>Role</label>
       <input type="text" class="form-control" [(ngModel)]="RoleName" (keyup)="loadRole()">
     </div>
-    <div class="col-4">
+    <div class="col-3">
       <label>IsActive</label>
       <select class="form-control" [(ngModel)]="IsActive" (change)="loadRole()">
         <option [value]="-1"></option>
@@ -89,12 +89,35 @@
         <div>
           <label>Role Name</label>
           <input class="form-control" type="text" [(ngModel)]="updateModel.RoleName" required>
+          <div *ngIf="!updateModel.RoleName" class="error-note">{{ error }}</div>
         </div>
       </div>
       <!-- Modal footer -->
       <div class="modal-footer">
         <button class="btn btn-success" (click)="OnSave()">Save</button>
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="CloseEditAddRole()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Delete -->
+<div>
+  <div class="modal" id="ModalDelete">
+    <div class="modal-dialog modal-dialog-top ">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Delete Role</h4>
+          <button type="button" class="btn-close" (click)="onCancel()"></button>
+        </div>
+        <div class="modal-body">
+          <p>Bạn có chắc chắn muốn xóa role này? </p>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-success" (click)="onConfirm()">Xóa</button>
+          <button type="button" class="btn btn-danger" (click)="onCancel()">Close</button>
+        </div>
       </div>
     </div>
   </div>
