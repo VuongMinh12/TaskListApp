@@ -101,7 +101,8 @@ export class StatusComponent implements OnInit {
     var request = {
       status: this.updateModel,
     };
-    if (this.updateModel.StatusName != '') {
+
+    if (this.updateModel.StatusName) {
       this.error = '';
       if (this.editOrAdd == 1) {
         this.statusService.EditStatus(request).subscribe((response) => {

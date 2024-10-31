@@ -17,7 +17,7 @@
     </div>
     <div class="col-3">
       <label>Status <b (click)="clearStatus()" class="button-clear"><i class="fa-solid fa-delete-left"></i></b></label>
-      <select class="form-control" [(ngModel)]="StatusInput" (change)="loadAllTask()" >
+      <select class="form-control" [(ngModel)]="StatusInput" (change)="loadAllTask()">
         <option *ngFor="let status of statusList" [value]="status.statusId">
           {{status.statusName}}
         </option>
@@ -113,7 +113,6 @@
   </div>
   <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons aria-label="Select page of periodic elements">
   </mat-paginator>
-
 </div>
 
 
@@ -131,8 +130,8 @@
       <div class="modal-body">
         <div>
           <label>Title </label>
-            <input type="text" class="form-control" [(ngModel)]="updateModel.Title" required>
-            <div *ngIf="!updateModel.Title" class="error-note">{{ error }}</div>
+          <input type="text" class="form-control" [(ngModel)]="updateModel.Title" required>
+          <div *ngIf="!updateModel.Title" class="error-note">{{ error }}</div>
         </div>
 
         <div>
@@ -170,13 +169,12 @@
           <input type="number" class="form-control" [(ngModel)]="updateModel.Estimate" required>
           <div *ngIf="!updateModel.Estimate" class="error-note">{{ error }}</div>
         </div>
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <div *ngIf="error" class="error-note">{{ error }}</div>
-          <button class="btn btn-success" (click)="OnSave()">Save</button>
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
-            (click)="CloseEditAddTask()">Close</button>
-        </div>
+      </div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <div *ngIf="error" class="error-note">{{ error }}</div>
+        <button class="btn btn-success" (click)="OnSave()">Save</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="CloseEditAddTask()">Close</button>
       </div>
     </div>
   </div>

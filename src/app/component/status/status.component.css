@@ -26,16 +26,20 @@
 
 .table-search div {
   display: inline-block;
-  padding: 40px;
+  padding: 10px;
 }
 
 .table-search .form-control {
   border: 2px solid black;
 }
 
+.modal {
+  margin-top: 0px !important;
+}
 .modal-body .form-control {
   border: 2px solid black;
   margin-top: 5px;
+  font-size: 18px;
 }
 
 .modal-body label{
@@ -62,14 +66,4 @@
   color: red;
   font-size: 15.5px;
   margin-left: 10px;
-}
-.button-clear {
-  color: black;
-  font-weight: bold;
-  cursor: pointer;
-  padding: 0 5px;
-  transition: color 0.3s;
-}
-.button-clear:hover {
-  color: red;
 }

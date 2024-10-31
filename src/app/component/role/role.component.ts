@@ -97,16 +97,17 @@ export class RoleComponent implements OnInit {
   error = '';
   OnSave() {
     var request = {
-      role: this.updateModel,
+      role: this.updateModel
     };
-    if (this.updateModel.RoleName != '') {
+
+    if (this.updateModel.RoleName) {
       this.error = '';
       if (this.editOrAdd == 1) {
         this.roleService.EditRole(request).subscribe((response) => {
           if (response.status == 1) {
             this.CloseEditAddRole();
             this.loadRole();
-            this.toastService.show(response.message, response.status);
+            this.toastService.show(response.message,response.status);
           }
           else {
             this.toastService.show(response.message, response.status);
@@ -117,7 +118,7 @@ export class RoleComponent implements OnInit {
           if (response.status == 1) {
             this.CloseEditAddRole();
             this.loadRole();
-            this.toastService.show(response.message, response.status);
+            this.toastService.show(response.message,response.status);
           }
           else {
             this.toastService.show(response.message, response.status);

@@ -162,6 +162,7 @@ export class UserComponent implements OnInit {
           if (response.status == 1) {
             this.CloseEditAddUser();
             this.LoadUser();
+            console.log(request)
             this.toastService.show(response.message,response.status);
           }
           else {

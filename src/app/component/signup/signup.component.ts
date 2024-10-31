@@ -74,7 +74,9 @@ export class SignupComponent implements OnInit {
       };
       this.service.Signup(request).subscribe((response: any) => {
         if (response.status == 1) {
-          this.router.navigate(['/login']);
+          setTimeout(() => {
+            this.router.navigate(['/login']);
+          }, 2000);
           this.toastService.show(response.message,response.status);
         } else {
           this.toastService.show(response.message,response.status);

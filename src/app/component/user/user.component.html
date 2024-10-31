@@ -108,10 +108,8 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
-  <div>
     <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons aria-label="Select page of periodic elements">
     </mat-paginator>
-  </div>
 </div>
 
 
@@ -127,7 +125,7 @@
 
       <!-- Modal body -->
       <div class="modal-body">
-        <div class="form-group" *ngIf="editOrAdd == 2">
+        <div class="form-group">
           <label>Email </label>
           <input class="form-control" type="text" [(ngModel)]="updateModel.Email" required (change)="validateMail()">
           <div *ngIf="errorMessage" class="error-note">{{errorMessage}}</div>
@@ -161,14 +159,11 @@
           <input class="form-control" type="password" [(ngModel)]="updateModel.Password" required>
           <div *ngIf="!updateModel.Password" class="error-note">{{ error }}</div>
         </div>
-
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <button class="btn btn-success" (click)="OnSave()">Save</button>
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
-            (click)="CloseEditAddUser()">Close</button>
-        </div>
-
+      </div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button class="btn btn-success" (click)="OnSave()">Save</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="CloseEditAddUser()">Close</button>
       </div>
     </div>
   </div>

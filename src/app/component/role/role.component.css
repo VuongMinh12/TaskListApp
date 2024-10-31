@@ -26,16 +26,20 @@
 
 .table-search div {
   display: inline-block;
-  padding: 40px;
+  padding: 10px;
 }
 
 .table-search .form-control {
   border: 2px solid black;
 }
 
+.modal {
+  margin-top: 0px !important;
+}
 .modal-body .form-control {
   border: 2px solid black;
   margin-top: 5px;
+  font-size: 18px;
 }
 
 .modal-body label{
@@ -57,7 +61,6 @@
 .table-mat th {
   font-weight: bold;
 }
-
 .error-note {
   color: red;
   font-size: 15.5px;
