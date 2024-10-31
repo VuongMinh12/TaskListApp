@@ -7,8 +7,8 @@ import { catchError, switchMap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class LoginService {
-
-  apiUrl : string = 'http://localhost:8009/api/User/';
+ // 5058 8009
+  apiUrl : string = 'http://localhost:8009/api/Account/';
   constructor(private http: HttpClient) { }
 
 
@@ -19,7 +19,6 @@ export class LoginService {
   setUserInfoLocalStorage(user: any){
     localStorage.setItem("UserId", user.userId);
     localStorage.setItem("Email", user.email);
-    localStorage.setItem("Username", user.userName);
     localStorage.setItem("RoleId", user.roleId);
     localStorage.setItem("AccessToken", user.token.accessToken);
     localStorage.setItem("RefreshToken", user.token.refreshToken);

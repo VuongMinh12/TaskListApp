@@ -62,31 +62,6 @@
   font-weight: bold;
 }
 
-::ng-deep .multiselect-dropdown span , ::ng-deep .selected-item-container  {
-  background-color: #ffffff !important;
-  color : #212529 !important;
-  width: 60%;
-  border: none !important;
-}
-::ng-deep .multiselect-dropdown a  {
-  color: red !important;
-}
-::ng-deep .multiselect-dropdown :hover , ::ng-deep  .selected-item :hover {
-  border: none !important;
-  box-shadow: none !important;
-}
-
-.button-clear {
-  color: black;
-  font-weight: bold;
-  cursor: pointer;
-  padding: 0 5px;
-  transition: color 0.3s;
-}
-
-.button-clear:hover {
-  color: red;
-}
 .error-note {
   color: red;
   font-size: 15.5px;

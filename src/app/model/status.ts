@@ -1,12 +1,17 @@
-export interface StatusRequest {
-  PageNumber : number;
-  PageSize : number;
-  StatusName : string ;
-  IsActive : number;
+export interface Status {
+  No: number,
+  StatusName : string,
+  IsActive : boolean,
+  StatusId : number
 }
-
-export interface StatusResponse {
+export class StatusUpdateAddCreate {
   StatusId : number;
-  StatusName : string ;
+  StatusName : string;
   IsActive : number;
+
+  constructor(temp: any){
+    this.StatusId = temp.statusId;
+    this.StatusName = temp.statusName ;
+    this.IsActive = temp.isActive;
+  }
 }

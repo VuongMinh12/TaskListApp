@@ -1,0 +1,124 @@
+<div class="martab table-hover">
+  <div class="task-header">
+    <div class="header-title">
+      <b class="task-title">Status Management</b>
+    </div>
+    <button type="button" class="btn btn-success add-button" (click)="OpenEditAddStatus({}, 2)">
+      <i class="fa-solid fa-plus"></i> Add
+    </button>
+  </div>
+
+  <div class="table-search">
+    <div class="col-4">
+      <label>Status</label>
+      <input type="text" class="form-control" [(ngModel)]="StatusName" (keyup)="loadStatus()">
+    </div>
+    <div class="col-3">
+      <label>IsActive</label>
+      <select class="form-control" [(ngModel)]="IsActive" (change)="loadStatus()">
+        <option [value]="-1"></option>
+        <option [value]="1">Active</option>
+        <option [value]="0">Deleted</option>
+      </select>
+    </div>
+  </div>
+
+  <div>
+    <table mat-table [dataSource]="dataSource" class="table table-hover table-mat">
+
+      <ng-container matColumnDef="No">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let element"> {{element.no}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="StatusName">
+        <th mat-header-cell *matHeaderCellDef>
+          <div>Status</div>
+        </th>
+        <td mat-cell *matCellDef="let element"> {{element.statusName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="IsActive">
+        <th mat-header-cell *matHeaderCellDef> IsActive </th>
+        <td mat-cell *matCellDef="let element"> {{element.isActive}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Edit">
+        <th mat-header-cell *matHeaderCellDef> Edit </th>
+        <td mat-cell *matCellDef="let element">
+          <span class="action-icon" (click)="OpenEditAddStatus(element, 1)">
+            <button class="btn btn-sm btn-warning">
+              <i class="fas fa-edit"></i> Edit</button>
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Delete">
+        <th mat-header-cell *matHeaderCellDef> Delete </th>
+        <td mat-cell *matCellDef="let element ">
+          <span class="action-icon" (click)="DeleteStatus(element.statusId)">
+            <button class="btn btn-sm btn-danger">
+              <i class="fa fa-trash"></i>Delete</button>
+          </span>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+    <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons aria-label="Select page of periodic elements">
+    </mat-paginator>
+</div>
+
+
+<!-- Modal -->
+<div class="modal" id="ModalEdit">
+  <div class="modal-dialog modal-dialog-centered  ">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Status</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="CloseEditAddStatus()"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Status Name </label>
+          <input class="form-control" type="text" [(ngModel)]="updateModel.StatusName" required>
+          <div *ngIf="!updateModel.StatusName" class="error-note">{{ error }}</div>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button class="btn btn-success" (click)="OnSave()">Save</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+          (click)="CloseEditAddStatus()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Delete -->
+<div>
+  <div class="modal" id="ModalDelete">
+    <div class="modal-dialog modal-dialog-top ">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Delete Status</h4>
+          <button type="button" class="btn-close" (click)="onCancel()"></button>
+        </div>
+        <div class="modal-body">
+          <p>Bạn có chắc chắn muốn xóa status này? </p>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-success" (click)="onConfirm()">Xóa</button>
+          <button type="button" class="btn btn-danger" (click)="onCancel()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

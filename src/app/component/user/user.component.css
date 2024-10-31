@@ -33,13 +33,9 @@
   border: 2px solid black;
 }
 
-.modal {
-  margin-top: 0px !important;
-}
 .modal-body .form-control {
   border: 2px solid black;
   margin-top: 5px;
-  font-size: 18px;
 }
 
 .modal-body label{
@@ -60,20 +56,6 @@
 }
 .table-mat th {
   font-weight: bold;
-}
-
-::ng-deep .multiselect-dropdown span , ::ng-deep .selected-item-container  {
-  background-color: #ffffff !important;
-  color : #212529 !important;
-  width: 60%;
-  border: none !important;
-}
-::ng-deep .multiselect-dropdown a  {
-  color: red !important;
-}
-::ng-deep .multiselect-dropdown :hover , ::ng-deep  .selected-item :hover {
-  border: none !important;
-  box-shadow: none !important;
 }
 
 .button-clear {

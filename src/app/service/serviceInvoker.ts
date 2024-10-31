@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ServiceInvoker {
-
+  // 5058 8009
   apiUrl : string = 'http://localhost:8009/api/';
   constructor(private http: HttpClient) { }
 
@@ -22,8 +22,8 @@ export class ServiceInvoker {
     if (request == undefined || request == "") request = {};
 
     request.currUserId = localStorage.getItem("UserId");
-    request.currUserName = localStorage.getItem("Username");
     request.UserRole = localStorage.getItem("RoleId");
+    request.currEmail = localStorage.getItem("Email");
 
     const httpPackage = {
       params: request,
@@ -37,7 +37,8 @@ export class ServiceInvoker {
     if (request == undefined || request == "") request = {};
 
     request.currUserId = localStorage.getItem("UserId");
-    request.currUserName = localStorage.getItem("Username");
+    request.UserRole = localStorage.getItem("RoleId");
+    request.currEmail = localStorage.getItem("Email");
 
     const httpPackage = request;
 
@@ -52,7 +53,8 @@ export class ServiceInvoker {
     if (request == undefined || request == "") request = {};
 
     request.currUserId = localStorage.getItem("UserId");
-    request.currUserName = localStorage.getItem("Username");
+    request.UserRole = localStorage.getItem("RoleId");
+    request.currEmail = localStorage.getItem("Email");
 
     const httpPackage = request;
 
@@ -66,8 +68,8 @@ export class ServiceInvoker {
     if (request == undefined || request == "") request = {};
 
     request.currUserId = localStorage.getItem("UserId");
-    request.currUserName = localStorage.getItem("Username");
     request.UserRole = localStorage.getItem("RoleId");
+    request.currEmail = localStorage.getItem("Email");
 
     const httpPackage = {
       headers: this.getAuthHeaders(),

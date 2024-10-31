@@ -1,0 +1,21 @@
+.no-underline {
+  text-decoration: none;
+  color: white;
+  font-size: large;
+}
+
+.mat-sidenav-container, .mat-sidenav {
+  color: #212529;
+  height: 871px;
+  background-color: white;
+}
+.mat-toolbar {
+  background-color: #212529;
+  color : white;
+  border-bottom: 3px solid rgb(129, 129, 250) !important;
+}
+::ng-deep .mat-drawer-inner-container{
+  border-right: 2px solid white !important;
+  background-color: #212529;
+}
+

@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
+import { MatButtonModule, MatIconButton } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { LoginService } from '../../service/login.service';
+import { ToastService } from '../../service/toast.service';
+import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-signup',
@@ -16,62 +19,83 @@ import { LoginService } from '../../service/login.service';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    CommonModule,
+    MatIconModule
   ],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css'
 })
 export class SignupComponent implements OnInit {
 
-  ngOnInit(): void {  }
+  ngOnInit(): void {
+   }
 
   constructor(
     private service : LoginService,
-    private router : Router
+    private router : Router,
+    private toastService : ToastService
   ){}
 
-  inputUName = "";
+  inputEmail = "";
+  inputFName = "";
+  inputLName = "";
   inputPw = "";
   inputPwCheck = "";
-  inputEmail = "";
 
-  clearInput(){
-    this.inputUName = "";
-    this.inputPw = "";
-    this.inputPwCheck = "";
-    this.inputEmail = "";
+  hide = signal(true);
+  hide2 = signal(true);
+  clickEvent(event: MouseEvent) {
+    this.hide.set(!this.hide());
+    event.stopPropagation();
   }
 
+  clickEvent2(event: MouseEvent) {
+    this.hide2.set(!this.hide2());
+    event.stopPropagation();
+  }
+
+
+  errPassword = '';
+  errSignup = '';
+
   signup() {
-    if (this.inputEmail != "" && this.inputUName != "" && this.inputPw != "" && this.inputPwCheck != "") {
+    if (this.inputEmail != "" && this.inputFName != "" && this.inputLName != "" && this.inputPw != "" && this.inputPwCheck != "" ) {
+      this.errSignup = '';
       if (this.inputPw !== this.inputPwCheck) {
-        alert('Mật khẩu không khớp!');
+        this.errPassword = 'Mật khẩu không khớp!';
         return;
       }
       let request = {
-        Username: this.inputUName,
+        Firstname: this.inputFName,
+        Lastname: this.inputLName,
         Password: this.inputPw,
         Email: this.inputEmail,
         RoleId : 1
       };
       this.service.Signup(request).subscribe((response: any) => {
         if (response.status == 1) {
-          alert(response.message)
-          this.router.navigate(['/login']);
+          setTimeout(() => {
+            this.router.navigate(['/login']);
+          }, 2000);
+          this.toastService.show(response.message,response.status);
         } else {
-          alert(response.message);
-          this.clearInput();
+          this.toastService.show(response.message,response.status);
         }
       });
     } else {
-      alert('Vui lòng điền đầy đủ thông tin!');
+      this.errSignup = 'Vui lòng điền đầy đủ thông tin!';
     }
   }
 
+  errorMessage = '';
   validateMail() {
-    const emailPattern = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/;
-    if (!emailPattern.test(this.inputEmail)) {
-      alert('Email không hợp lệ! Hay nhap lai thong tin');
-      this.inputEmail = "";
+    const emailPattern = /[a-zA-Z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,3}$/;
+    if (this.inputEmail.trim() === '') {
+      this.errorMessage = '';
+    } else if (!emailPattern.test(this.inputEmail)) {
+      this.errorMessage = 'Email không hợp lệ! Hãy nhập lại email';
+    } else {
+      this.errorMessage = '';
     }
   }
 }
