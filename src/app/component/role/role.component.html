@@ -80,7 +80,8 @@
     <div class="modal-content">
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Role</h4>
+        <h4 class="modal-title" *ngIf="editOrAdd == 1">Update Role</h4>
+        <h4 class="modal-title" *ngIf="editOrAdd == 2">Add Role</h4>
         <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="CloseEditAddRole()"></button>
       </div>
 
