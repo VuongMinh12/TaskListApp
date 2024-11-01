@@ -23,7 +23,7 @@ export class ToastComponent implements OnInit {
     let statusClass = "toast-status-" + status
     var temp = { message : message, status : statusClass, id : this.toastId };
     this.toasts.push(temp);
-    setTimeout(() => this.removeToast(temp.id),60000);
+    setTimeout(() => this.removeToast(temp.id),1500);
     this.toastId++;
   }
 
