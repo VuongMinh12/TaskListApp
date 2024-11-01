@@ -78,7 +78,8 @@
     <div class="modal-content">
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Status</h4>
+        <h4 class="modal-title" *ngIf="editOrAdd == 1">Update Status</h4>
+        <h4 class="modal-title" *ngIf="editOrAdd == 2">Add Status</h4>
         <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="CloseEditAddStatus()"></button>
       </div>
 

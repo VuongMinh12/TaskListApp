@@ -122,7 +122,8 @@
     <div class="modal-content">
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Task</h4>
+        <h4 class="modal-title" *ngIf="editOrAdd == 1">Update Task</h4>
+        <h4 class="modal-title" *ngIf="editOrAdd == 2">Add Task</h4>
         <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="CloseEditAddTask()"></button>
       </div>
 
